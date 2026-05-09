@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daily Digest — 2026-05-09</title>
+  <style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #1a1a2e;
+  --gold: #e8b84b;
+  --bg:   #f0f2f5;
+  --card: #ffffff;
+  --text: #1a202c;
+  --sub:  #4a5568;
+  --muted:#a0aec0;
+  --border:#e2e8f0;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: Georgia, "Times New Roman", serif; background: var(--bg); color: var(--text); }
+
+/* ── Masthead ─────────────────────────────────────── */
+.masthead {
+  background: var(--navy);
+  text-align: center;
+  padding: 40px 24px 26px;
+  border-bottom: 4px solid var(--gold);
+}
+.masthead-name {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-weight: 900;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-shadow: 0 2px 14px rgba(232,184,75,.3);
+  margin-bottom: 6px;
+}
+.masthead-sub {
+  font-size: .88rem; color: #a0aec0; font-style: italic; margin-bottom: 14px;
+}
+.masthead-meta {
+  display: flex; justify-content: center; flex-wrap: wrap;
+  gap: 6px 20px; font-size: .78rem; color: var(--muted);
+  font-family: Arial, sans-serif;
+  border-top: 1px solid #2d3748; padding-top: 12px;
+}
+
+/* ── Nav pills ────────────────────────────────────── */
+.section-nav {
+  background: var(--navy);
+  padding: 10px 24px 14px;
+  display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+  border-bottom: 2px solid #2d3748;
+}
+.nav-pill {
+  font-family: Arial, sans-serif; font-size: .74rem; font-weight: 600;
+  padding: 4px 14px; border-radius: 20px; text-decoration: none;
+  color: #a0aec0; border: 1.5px solid #2d3748;
+  transition: color .15s, border-color .15s;
+  white-space: nowrap;
+}
+.nav-pill:hover { color: var(--gold); border-color: var(--gold); }
+
+/* ── Page wrapper ─────────────────────────────────── */
+.page {
+  max-width: 1160px; margin: 0 auto; padding: 36px 24px 64px;
+}
+
+/* ── Section divider ──────────────────────────────── */
+.divider {
+  font-family: Arial, sans-serif; font-size: .68rem; font-weight: 800;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+  display: flex; align-items: center; gap: 12px; margin-bottom: 22px;
+}
+.divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+
+/* ══════════════════════════════════════════════════
+   TOP 5 HIGHLIGHTS
+   ══════════════════════════════════════════════════ */
+.highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto;
+  gap: 18px;
+  margin-bottom: 42px;
+}
+/* top-2 cards span extra height visually via padding */
+.hl-card-0, .hl-card-1 { grid-column: span 1; }
+.hl-card-2, .hl-card-3, .hl-card-4 { grid-column: span 1; }
+
+@media (max-width: 860px) {
+  .highlights-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .highlights-grid { grid-template-columns: 1fr; }
+}
+
+.hl-card {
+  background: var(--card);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(0,0,0,.08);
+  display: flex; flex-direction: column;
+  transition: transform .18s, box-shadow .18s;
+  position: relative;
+}
+.hl-card:hover { transform: translateY(-4px); box-shadow: 0 10px 32px rgba(0,0,0,.14); }
+
+/* rank badge */
+.hl-rank {
+  position: absolute; top: 14px; left: 14px;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: rgba(0,0,0,.18);
+  color: #fff; font-family: Arial, sans-serif;
+  font-size: .75rem; font-weight: 900;
+  display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(4px);
+  z-index: 1;
+}
+
+.hl-accent-bar {
+  height: 6px; width: 100%;
+}
+
+.hl-body { padding: 18px 18px 20px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+
+.hl-source-badge {
+  font-family: Arial, sans-serif; font-size: .68rem; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 20px; color: #fff;
+  display: inline-block; align-self: flex-start;
+}
+
+.hl-title {
+  font-size: .97rem; font-weight: 700; line-height: 1.45; color: var(--text);
+  text-decoration: none; display: block;
+}
+.hl-title:hover { color: #553c9a; text-decoration: underline; }
+
+.hl-reason {
+  font-size: .82rem; line-height: 1.6; color: var(--sub);
+  font-style: italic;
+  border-left: 3px solid;
+  padding-left: 10px;
+}
+
+/* ══════════════════════════════════════════════════
+   ALL RSS STORIES
+   ══════════════════════════════════════════════════ */
+.rss-section {
+  background: var(--card);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 3px 14px rgba(0,0,0,.07);
+  margin-bottom: 36px;
+}
+.rss-section-header {
+  padding: 16px 24px;
+  display: flex; align-items: center; gap: 10px;
+  color: #fff;
+}
+.rss-section-header .sec-icon { font-size: 1.3rem; }
+.rss-section-header .sec-title {
+  font-size: 1rem; font-weight: 700; font-family: Arial, sans-serif;
+  letter-spacing: .02em; flex: 1;
+}
+.rss-section-header .sec-count {
+  font-family: Arial, sans-serif; font-size: .7rem; font-weight: 600;
+  background: rgba(255,255,255,.2); border-radius: 20px; padding: 2px 10px;
+}
+
+/* source filter tabs */
+.source-tabs {
+  display: flex; gap: 0; flex-wrap: wrap;
+  border-bottom: 2px solid var(--border);
+  padding: 0 16px;
+  background: #fafbfc;
+}
+.source-tab {
+  font-family: Arial, sans-serif; font-size: .74rem; font-weight: 600;
+  padding: 10px 16px; cursor: pointer; border: none; background: none;
+  color: var(--muted); border-bottom: 2px solid transparent;
+  margin-bottom: -2px; transition: color .15s, border-color .15s;
+  white-space: nowrap;
+}
+.source-tab:hover { color: var(--text); }
+.source-tab.active { color: var(--text); border-bottom-color: #667eea; }
+
+/* article list */
+.article-list { list-style: none; }
+
+.article-item {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--border);
+  transition: background .12s;
+}
+.article-item:last-child { border-bottom: none; }
+.article-item:hover { background: #f7f9fc; }
+.article-item.highlighted { background: #fffbeb; }
+.article-item.hidden { display: none; }
+
+.article-num {
+  font-family: Arial, sans-serif; font-size: .72rem; font-weight: 800;
+  color: var(--muted); min-width: 22px; padding-top: 2px; text-align: right;
+}
+.article-content { flex: 1; min-width: 0; }
+
+.article-meta-top {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 5px; flex-wrap: wrap;
+}
+.source-chip {
+  font-family: Arial, sans-serif; font-size: .64rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .06em;
+  padding: 2px 9px; border-radius: 20px; color: #fff;
+  flex-shrink: 0;
+}
+.star-badge {
+  font-family: Arial, sans-serif; font-size: .7rem;
+  color: var(--muted); display: flex; align-items: center; gap: 3px;
+}
+
+.article-link {
+  font-size: .9rem; font-weight: 600; color: var(--text);
+  text-decoration: none; line-height: 1.45; display: block;
+}
+.article-link:hover { color: #553c9a; text-decoration: underline; }
+
+.highlight-tag {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-family: Arial, sans-serif; font-size: .68rem; font-weight: 700;
+  color: #b7791f; background: #fefcbf; border-radius: 20px; padding: 2px 9px;
+}
+
+/* ── Accordion (GitHub / Reddit) ─────────────────── */
+.other-sections { display: flex; flex-direction: column; gap: 14px; }
+
+.accordion {
+  background: var(--card); border-radius: 14px; overflow: hidden;
+  box-shadow: 0 3px 14px rgba(0,0,0,.07);
+}
+.accordion[open] { box-shadow: 0 6px 26px rgba(0,0,0,.11); }
+.accordion > summary {
+  list-style: none; cursor: pointer; user-select: none;
+  padding: 14px 20px; display: flex; align-items: center; gap: 10px; color: #fff;
+}
+.accordion > summary::-webkit-details-marker { display: none; }
+.acc-chevron { font-style: normal; font-size: .75rem; transition: transform .22s; flex-shrink: 0; }
+.accordion[open] > summary .acc-chevron { transform: rotate(180deg); }
+.acc-body { padding: 16px 22px 20px; animation: slideDown .2s ease-out; }
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.acc-summary-box {
+  font-size: .85rem; line-height: 1.7; color: var(--sub);
+  font-style: italic; background: #f7f9fc;
+  border-left: 3px solid; border-radius: 0 8px 8px 0;
+  padding: 9px 14px; margin-bottom: 14px;
+}
+.acc-list { list-style: none; }
+.acc-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 9px 0; border-bottom: 1px solid var(--border);
+  font-size: .86rem; font-family: Arial, sans-serif;
+}
+.acc-item:last-child { border-bottom: none; }
+.acc-index {
+  font-size: .68rem; font-weight: 700; min-width: 20px; height: 20px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  color: #fff; flex-shrink: 0; margin-top: 2px;
+}
+.acc-link { color: var(--text); text-decoration: none; font-weight: 600; line-height: 1.45; }
+.acc-link:hover { color: #553c9a; text-decoration: underline; }
+.acc-meta { font-size: .72rem; color: var(--muted); margin-top: 3px; display: flex; gap: 6px; }
+.meta-badge {
+  background: #edf2f7; border-radius: 20px; padding: 1px 7px;
+  display: inline-flex; align-items: center; gap: 3px;
+}
+
+/* ── Footer ───────────────────────────────────────── */
+.footer {
+  text-align: center; color: var(--muted); font-size: .74rem;
+  font-family: Arial, sans-serif;
+  margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border);
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-name">&#9733; The Daily Digest &#9733;</div>
+  <div class="masthead-sub">Your personal newspaper, curated by AI</div>
+  <div class="masthead-meta">
+    <span>&#128197; 2026-05-09</span>
+    <span>&#183;</span>
+    <span>&#128279; 30 stories</span>
+    <span>&#183;</span>
+    <span>&#9733; 5 highlights</span>
+  </div>
+</header>
+
+<nav class="section-nav"><a class="nav-pill" href="#highlights">&#9733; Highlights</a><a class="nav-pill" href="#top-stories">&#128240; All Stories</a><a class="nav-pill" href="#github-trending-—-python">🐙 GitHub Trending — python</a><a class="nav-pill" href="#github-trending">🐙 GitHub Trending</a><a class="nav-pill" href="#r-programming">🤖 r/programming</a><a class="nav-pill" href="#r-machinelearning">🤖 r/MachineLearning</a></nav>
+
+<div class="page">
+
+  <!-- TOP 5 HIGHLIGHTS -->
+  <div class="divider" id="highlights">&#9733; Top 5 Highlights of the Day</div>
+  <div class="highlights-grid">
+  <div class="hl-card hl-card-0">
+    <div class="hl-accent-bar" style="background:#667eea"></div>
+    <div class="hl-rank">1</div>
+    <div class="hl-body">
+      <span class="hl-source-badge" style="background:#667eea">Hacker News</span>
+      <a class="hl-title" href="https://gowers.wordpress.com/2026/05/08/a-recent-experience-with-chatgpt-5-5-pro/" target="_blank" rel="noopener">A recent experience with ChatGPT 5.5 Pro</a>
+      
+    </div>
+  </div>
+  <div class="hl-card hl-card-1">
+    <div class="hl-accent-bar" style="background:#667eea"></div>
+    <div class="hl-rank">2</div>
+    <div class="hl-body">
+      <span class="hl-source-badge" style="background:#667eea">Hacker News</span>
+      <a class="hl-title" href="https://twitter.com/trq212/status/2052809885763747935" target="_blank" rel="noopener">Using Claude Code: The unreasonable effectiveness of HTML</a>
+      
+    </div>
+  </div>
+  <div class="hl-card hl-card-2">
+    <div class="hl-accent-bar" style="background:#667eea"></div>
+    <div class="hl-rank">3</div>
+    <div class="hl-body">
+      <span class="hl-source-badge" style="background:#667eea">Hacker News</span>
+      <a class="hl-title" href="https://reclaimthenet.org/google-broke-recaptcha-for-de-googled-android-users" target="_blank" rel="noopener">Google broke reCAPTCHA for de-googled Android users</a>
+      
+    </div>
+  </div>
+  <div class="hl-card hl-card-3">
+    <div class="hl-accent-bar" style="background:#667eea"></div>
+    <div class="hl-rank">4</div>
+    <div class="hl-body">
+      <span class="hl-source-badge" style="background:#667eea">Hacker News</span>
+      <a class="hl-title" href="https://moq.dev/blog/webrtc-is-the-problem/" target="_blank" rel="noopener">OpenAI's WebRTC problem</a>
+      
+    </div>
+  </div>
+  <div class="hl-card hl-card-4">
+    <div class="hl-accent-bar" style="background:#667eea"></div>
+    <div class="hl-rank">5</div>
+    <div class="hl-body">
+      <span class="hl-source-badge" style="background:#667eea">Hacker News</span>
+      <a class="hl-title" href="https://martinfowler.com/bliki/MythicalManMonth.html" target="_blank" rel="noopener">Mythical Man Month</a>
+      
+    </div>
+  </div></div>
+
+  <!-- ALL RSS STORIES -->
+  <div class="divider" id="top-stories">&#128240; All Stories</div>
+  <div class="rss-section">
+    <div class="rss-section-header" style="background:linear-gradient(135deg,#667eea,#764ba2)">
+      <span class="sec-icon">&#128240;</span>
+      <span class="sec-title">RSS News Feed</span>
+      <span class="sec-count">10 stories</span>
+    </div>
+    <div class="source-tabs"><button class="source-tab active" data-source="all">All</button><button class="source-tab" data-source="Hacker News">Hacker News</button><button class="source-tab" data-source="The Verge">The Verge</button></div>
+    <ul class="article-list">
+    <li class="article-item highlighted" data-source="Hacker News">
+      <span class="article-num">1</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#667eea">Hacker News</span>
+          <span class="highlight-tag">&#9733; Highlight</span>
+        </div>
+        <a class="article-link" href="https://gowers.wordpress.com/2026/05/08/a-recent-experience-with-chatgpt-5-5-pro/" target="_blank" rel="noopener">A recent experience with ChatGPT 5.5 Pro</a>
+      </div>
+    </li>
+    <li class="article-item highlighted" data-source="Hacker News">
+      <span class="article-num">2</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#667eea">Hacker News</span>
+          <span class="highlight-tag">&#9733; Highlight</span>
+        </div>
+        <a class="article-link" href="https://twitter.com/trq212/status/2052809885763747935" target="_blank" rel="noopener">Using Claude Code: The unreasonable effectiveness of HTML</a>
+      </div>
+    </li>
+    <li class="article-item highlighted" data-source="Hacker News">
+      <span class="article-num">3</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#667eea">Hacker News</span>
+          <span class="highlight-tag">&#9733; Highlight</span>
+        </div>
+        <a class="article-link" href="https://reclaimthenet.org/google-broke-recaptcha-for-de-googled-android-users" target="_blank" rel="noopener">Google broke reCAPTCHA for de-googled Android users</a>
+      </div>
+    </li>
+    <li class="article-item highlighted" data-source="Hacker News">
+      <span class="article-num">4</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#667eea">Hacker News</span>
+          <span class="highlight-tag">&#9733; Highlight</span>
+        </div>
+        <a class="article-link" href="https://moq.dev/blog/webrtc-is-the-problem/" target="_blank" rel="noopener">OpenAI's WebRTC problem</a>
+      </div>
+    </li>
+    <li class="article-item highlighted" data-source="Hacker News">
+      <span class="article-num">5</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#667eea">Hacker News</span>
+          <span class="highlight-tag">&#9733; Highlight</span>
+        </div>
+        <a class="article-link" href="https://martinfowler.com/bliki/MythicalManMonth.html" target="_blank" rel="noopener">Mythical Man Month</a>
+      </div>
+    </li>
+    <li class="article-item" data-source="The Verge">
+      <span class="article-num">6</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#e53e3e">The Verge</span>
+          
+        </div>
+        <a class="article-link" href="https://www.theverge.com/games/927333/asus-rog-strix-xg129c-secondary-display" target="_blank" rel="noopener">Asus chases Elgato with its own secondary touchscreen display</a>
+      </div>
+    </li>
+    <li class="article-item" data-source="The Verge">
+      <span class="article-num">7</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#e53e3e">The Verge</span>
+          
+        </div>
+        <a class="article-link" href="https://www.theverge.com/streaming/927327/amazon-prime-video-vertical-video-feed" target="_blank" rel="noopener">Amazon is adding a vertical video feed to Prime Video</a>
+      </div>
+    </li>
+    <li class="article-item" data-source="The Verge">
+      <span class="article-num">8</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#e53e3e">The Verge</span>
+          
+        </div>
+        <a class="article-link" href="https://www.theverge.com/tech/926989/yarbo-robot-lawn-mower-hack-company-update-security-promise" target="_blank" rel="noopener">Here is Yarbo’s promise to fix the robot mower that ran me over</a>
+      </div>
+    </li>
+    <li class="article-item" data-source="The Verge">
+      <span class="article-num">9</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#e53e3e">The Verge</span>
+          
+        </div>
+        <a class="article-link" href="https://www.theverge.com/ai-artificial-intelligence/902546/data-centers-ai-energy-power-grids-controversy" target="_blank" rel="noopener">All the latest updates on AI data centers</a>
+      </div>
+    </li>
+    <li class="article-item" data-source="The Verge">
+      <span class="article-num">10</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#e53e3e">The Verge</span>
+          
+        </div>
+        <a class="article-link" href="https://www.theverge.com/policy/927071/doge-chatgpt-grants-canceled" target="_blank" rel="noopener">DOGE used ChatGPT in a way that was both dumb and illegal, judge rules</a>
+      </div>
+    </li></ul>
+  </div>
+
+  <!-- OTHER SECTIONS (GitHub, Reddit) -->
+  <div class="divider">&#128279; More Sources</div><div class="other-sections">
+  <details class="accordion" open id="github-trending-—-python">
+    <summary style="background:linear-gradient(135deg,#11998e,#38ef7d)">
+      <span class="sec-icon">🐙</span>
+      <span class="sec-title">GitHub Trending — python</span>
+      <span class="sec-count">5 stories</span>
+      <i class="acc-chevron">&#9660;</i>
+    </summary>
+    <div class="acc-body">
+      
+      <ul class="acc-list">
+      <li class="acc-item">
+        <div class="acc-index" style="background:#11998e">1</div>
+        <div><a class="acc-link" href="https://github.com/anthropics/financial-services" target="_blank" rel="noopener">anthropics / financial-services</a><div class="acc-meta"><span class="meta-badge">&#11088; 16,064</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#11998e">2</div>
+        <div><a class="acc-link" href="https://github.com/z-lab/dflash" target="_blank" rel="noopener">z-lab / dflash</a><div class="acc-meta"><span class="meta-badge">&#11088; 3,926</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#11998e">3</div>
+        <div><a class="acc-link" href="https://github.com/CloakHQ/CloakBrowser" target="_blank" rel="noopener">CloakHQ / CloakBrowser</a><div class="acc-meta"><span class="meta-badge">&#11088; 3,442</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#11998e">4</div>
+        <div><a class="acc-link" href="https://github.com/awslabs/aidlc-workflows" target="_blank" rel="noopener">awslabs / aidlc-workflows</a><div class="acc-meta"><span class="meta-badge">&#11088; 1,837</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#11998e">5</div>
+        <div><a class="acc-link" href="https://github.com/HKUDS/AI-Trader" target="_blank" rel="noopener">HKUDS / AI-Trader</a><div class="acc-meta"><span class="meta-badge">&#11088; 14,895</span></div></div>
+      </li>
+      </ul>
+    </div>
+  </details>
+  <details class="accordion" id="github-trending">
+    <summary style="background:linear-gradient(135deg,#11998e,#38ef7d)">
+      <span class="sec-icon">🐙</span>
+      <span class="sec-title">GitHub Trending</span>
+      <span class="sec-count">5 stories</span>
+      <i class="acc-chevron">&#9660;</i>
+    </summary>
+    <div class="acc-body">
+      
+      <ul class="acc-list">
+      <li class="acc-item">
+        <div class="acc-index" style="background:#11998e">1</div>
+        <div><a class="acc-link" href="https://github.com/anthropics/financial-services" target="_blank" rel="noopener">anthropics / financial-services</a><div class="acc-meta"><span class="meta-badge">&#11088; 16,064</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#11998e">2</div>
+        <div><a class="acc-link" href="https://github.com/addyosmani/agent-skills" target="_blank" rel="noopener">addyosmani / agent-skills</a><div class="acc-meta"><span class="meta-badge">&#11088; 36,264</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#11998e">3</div>
+        <div><a class="acc-link" href="https://github.com/Hmbown/DeepSeek-TUI" target="_blank" rel="noopener">Hmbown / DeepSeek-TUI</a><div class="acc-meta"><span class="meta-badge">&#11088; 22,418</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#11998e">4</div>
+        <div><a class="acc-link" href="https://github.com/z-lab/dflash" target="_blank" rel="noopener">z-lab / dflash</a><div class="acc-meta"><span class="meta-badge">&#11088; 3,926</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#11998e">5</div>
+        <div><a class="acc-link" href="https://github.com/decolua/9router" target="_blank" rel="noopener">decolua / 9router</a><div class="acc-meta"><span class="meta-badge">&#11088; 5,916</span></div></div>
+      </li>
+      </ul>
+    </div>
+  </details>
+  <details class="accordion" id="r-programming">
+    <summary style="background:linear-gradient(135deg,#f7971e,#ffd200)">
+      <span class="sec-icon">🤖</span>
+      <span class="sec-title">r/programming</span>
+      <span class="sec-count">5 stories</span>
+      <i class="acc-chevron">&#9660;</i>
+    </summary>
+    <div class="acc-body">
+      
+      <ul class="acc-list">
+      <li class="acc-item">
+        <div class="acc-index" style="background:#f7971e">1</div>
+        <div><a class="acc-link" href="https://www.stroustrup.com/bs_faq2.html#memory-leaks" target="_blank" rel="noopener">Bjarne Stroustrup: How do I deal with memory leaks? By writing code that doesn't have any.</a><div class="acc-meta"><span class="meta-badge">&#8679; 577</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#f7971e">2</div>
+        <div><a class="acc-link" href="https://hacks.mozilla.org/2026/05/behind-the-scenes-hardening-firefox/" target="_blank" rel="noopener">Mozilla: Behind the Scenes Hardening Firefox</a><div class="acc-meta"><span class="meta-badge">&#8679; 105</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#f7971e">3</div>
+        <div><a class="acc-link" href="https://privatecaptcha.com/blog/google-cloud-fraud-defence-wei/" target="_blank" rel="noopener">Google Cloud Fraud Defence is just WEI repackaged</a><div class="acc-meta"><span class="meta-badge">&#8679; 62</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#f7971e">4</div>
+        <div><a class="acc-link" href="https://dhung.dev/blog/onboarding-hazing-ritual" target="_blank" rel="noopener">Your Onboarding Is a Hazing Ritual and You Call It Agile</a><div class="acc-meta"><span class="meta-badge">&#8679; 60</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#f7971e">5</div>
+        <div><a class="acc-link" href="https://www.wiz.io/blog/dirty-frag-linux-kernel-local-privilege-escalation-via-esp-and-rxrpc" target="_blank" rel="noopener">Dirty Frag: Yet Another Universal Linux Kernel Privilege Escalation Vulnerability Active Since 2017, Unaffected By &quot;Copy Fail&quot; Mitigations</a><div class="acc-meta"><span class="meta-badge">&#8679; 37</span></div></div>
+      </li>
+      </ul>
+    </div>
+  </details>
+  <details class="accordion" id="r-machinelearning">
+    <summary style="background:linear-gradient(135deg,#f7971e,#ffd200)">
+      <span class="sec-icon">🤖</span>
+      <span class="sec-title">r/MachineLearning</span>
+      <span class="sec-count">5 stories</span>
+      <i class="acc-chevron">&#9660;</i>
+    </summary>
+    <div class="acc-body">
+      
+      <ul class="acc-list">
+      <li class="acc-item">
+        <div class="acc-index" style="background:#f7971e">1</div>
+        <div><a class="acc-link" href="https://www.reddit.com/r/MachineLearning/comments/1t72u1r/people_interested_in_continual_learning_researchr/" target="_blank" rel="noopener">People Interested in Continual Learning Research[R]</a><div class="acc-meta"><span class="meta-badge">&#8679; 89</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#f7971e">2</div>
+        <div><a class="acc-link" href="https://www.reddit.com/r/MachineLearning/comments/1t7lmu4/interactive_kl_divergence_visualisation_p/" target="_blank" rel="noopener">Interactive KL Divergence Visualisation [P]</a><div class="acc-meta"><span class="meta-badge">&#8679; 23</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#f7971e">3</div>
+        <div><a class="acc-link" href="https://www.reddit.com/r/MachineLearning/comments/1t7mfqr/neurips_reviewers_any_word_after_the_invite_email/" target="_blank" rel="noopener">NeurIPS reviewers, any word after the invite email? [D]</a><div class="acc-meta"><span class="meta-badge">&#8679; 13</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#f7971e">4</div>
+        <div><a class="acc-link" href="https://github.com/Robby955/FormalSLT" target="_blank" rel="noopener">Formalizing statistical learning theory in Lean 4 [R]</a><div class="acc-meta"><span class="meta-badge">&#8679; 9</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#f7971e">5</div>
+        <div><a class="acc-link" href="https://www.reddit.com/r/MachineLearning/comments/1t7avgp/embedding_models_for_time_series_data_d/" target="_blank" rel="noopener">Embedding models for time series data [D]</a><div class="acc-meta"><span class="meta-badge">&#8679; 7</span></div></div>
+      </li>
+      </ul>
+    </div>
+  </details></div>
+
+  <div class="footer">
+    Generated by daily-info-digest &middot; Summarized with Claude AI
+  </div>
+</div>
+
+<script>
+(function () {
+  // Source filter tabs
+  var tabs = document.querySelectorAll('.source-tab');
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      var src = tab.dataset.source;
+      tabs.forEach(function (t) { t.classList.remove('active'); });
+      tab.classList.add('active');
+      document.querySelectorAll('.article-item').forEach(function (item) {
+        if (src === 'all' || item.dataset.source === src) {
+          item.classList.remove('hidden');
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

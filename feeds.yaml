@@ -1,0 +1,28 @@
+# Daily Info Digest — source configuration
+
+rss_feeds:
+  - name: Hacker News
+    url: https://news.ycombinator.com/rss
+    max_items: 5
+  - name: The Verge
+    url: https://www.theverge.com/rss/index.xml
+    max_items: 5
+
+github_trending:
+  languages:
+    - python
+    - ""          # empty string = all languages
+  since: daily    # daily | weekly | monthly
+  max_repos: 5
+
+subreddits:
+  - name: programming
+    max_posts: 5
+  - name: MachineLearning
+    max_posts: 5
+
+summarization:
+  enabled: true
+
+output:
+  dir: output
