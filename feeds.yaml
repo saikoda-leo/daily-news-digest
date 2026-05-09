@@ -7,6 +7,15 @@ rss_feeds:
   - name: The Verge
     url: https://www.theverge.com/rss/index.xml
     max_items: 5
+  - name: VnExpress
+    url: https://vnexpress.net/rss/tin-moi-nhat.rss
+    max_items: 5
+  - name: Tuổi Trẻ
+    url: https://tuoitre.vn/rss/tin-moi-nhat.rss
+    max_items: 5
+  - name: Tinhte.vn
+    url: https://tinhte.vn/rss
+    max_items: 5
 
 github_trending:
   languages:
