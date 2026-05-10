@@ -20,7 +20,10 @@ Two phases deliver the full-text structured breakdown feature. Phase 1 wires in 
   2. When an article URL is unreachable or returns fewer than 200 characters of text, the digest still completes using the RSS feed summary as fallback — no articles are skipped
   3. All RSS article fetches complete before summarization starts, and total fetch time for 20-30 articles is visibly parallel (not sequential)
   4. A malformed or truncated Claude JSON response does not crash the pipeline — the affected article gets empty structured fields and the rest of the digest renders normally
-**Plans**: TBD
+**Plans**: 3 plans
+  - [ ] 01-01-PLAN.md — Article fetcher module + RSS HTML stripping (FETCH-01..05)
+  - [ ] 01-02-PLAN.md — Structured Claude summarizer (SUMM-01..03)
+  - [ ] 01-03-PLAN.md — Wire fetch + branched summarizer into main.py (SUMM-04, FETCH-05 orchestration)
 
 ### Phase 2: Frontend
 **Goal**: The HTML digest renders each RSS article's structured breakdown — core idea sentence and numbered key points — inside the existing article dropdown
@@ -38,5 +41,5 @@ Two phases deliver the full-text structured breakdown feature. Phase 1 wires in 
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Backend | 0/TBD | Not started | - |
+| 1. Backend | 0/3 | Not started | - |
 | 2. Frontend | 0/TBD | Not started | - |
