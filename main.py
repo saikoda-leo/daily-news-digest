@@ -9,7 +9,7 @@ import yaml
 from src.scrapers.rss import fetch_rss
 from src.scrapers.github import fetch_github_trending
 from src.scrapers.reddit import fetch_reddit_posts
-from src.summarizer import summarize_section, get_top_highlights
+from src.summarizer import summarize_section, get_top_highlights, summarize_items
 from src.renderer import render_digest
 from src.html_renderer import render_html_digest
 
@@ -76,6 +76,14 @@ def main() -> None:
                 section["summary"] = summarize_section(section["title"], section["items"])
             except Exception as e:
                 print(f"[warn] summarization failed for {section['title']}: {e}", file=sys.stderr)
+
+            print(f"Summarizing articles in: {section['title']} …", flush=True)
+            try:
+                per_item = summarize_items(section["title"], section["items"])
+                for item, ai_sum in zip(section["items"], per_item):
+                    item["ai_summary"] = ai_sum
+            except Exception as e:
+                print(f"[warn] item summary failed for {section['title']}: {e}", file=sys.stderr)
 
     output_dir = Path(config.get("output", {}).get("dir", "output"))
     output_dir.mkdir(exist_ok=True)

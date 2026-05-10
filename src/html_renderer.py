@@ -304,6 +304,60 @@ body { font-family: Georgia, "Times New Roman", serif; background: var(--bg); co
   display: inline-flex; align-items: center; gap: 3px;
 }
 
+/* ── Per-article dropdown ─────────────────────────── */
+.article-details { width: 100%; }
+.article-details > summary {
+  list-style: none; cursor: pointer; user-select: none;
+  display: flex; align-items: center; gap: 8px;
+}
+.article-details > summary::-webkit-details-marker { display: none; }
+.article-title-text {
+  flex: 1; font-size: .9rem; font-weight: 600; color: var(--text); line-height: 1.45;
+}
+.article-details[open] .article-title-text { color: #553c9a; }
+.article-toggle-icon {
+  font-size: .6rem; color: var(--muted); transition: transform .2s; flex-shrink: 0;
+}
+.article-details[open] .article-toggle-icon { transform: rotate(180deg); }
+.article-ai-summary {
+  font-size: .83rem; line-height: 1.65; color: var(--sub);
+  background: #f7f9fc; border-left: 3px solid var(--border);
+  border-radius: 0 6px 6px 0; padding: 10px 14px; margin-top: 8px;
+  animation: slideDown .2s ease-out;
+}
+.article-read-more {
+  display: inline-block; margin-top: 6px;
+  font-family: Arial, sans-serif; font-size: .76rem; font-weight: 600;
+  color: #553c9a; text-decoration: none;
+}
+.article-read-more:hover { text-decoration: underline; }
+
+/* acc-item dropdown */
+.acc-details { width: 100%; }
+.acc-details > summary {
+  list-style: none; cursor: pointer; user-select: none;
+  display: flex; align-items: center; gap: 6px;
+}
+.acc-details > summary::-webkit-details-marker { display: none; }
+.acc-title-text { flex: 1; font-weight: 600; color: var(--text); line-height: 1.45; }
+.acc-details[open] .acc-title-text { color: #553c9a; }
+.acc-toggle-icon {
+  font-size: .6rem; color: var(--muted); transition: transform .2s; flex-shrink: 0;
+}
+.acc-details[open] .acc-toggle-icon { transform: rotate(180deg); }
+.acc-ai-summary {
+  font-size: .8rem; line-height: 1.6; color: var(--sub);
+  background: #f7f9fc; border-left: 3px solid var(--border);
+  border-radius: 0 6px 6px 0; padding: 8px 12px; margin-top: 7px;
+  animation: slideDown .2s ease-out;
+}
+.acc-read-more {
+  display: inline-block; margin-top: 5px;
+  font-family: Arial, sans-serif; font-size: .74rem; font-weight: 600;
+  color: #553c9a; text-decoration: none;
+}
+.acc-read-more:hover { text-decoration: underline; }
+
 /* ── Footer ───────────────────────────────────────── */
 .footer {
   text-align: center; color: var(--muted); font-size: .74rem;
@@ -446,14 +500,26 @@ def _render_rss_items(items: list, highlight_indices: set, source_list: list) ->
         source = item.get("source", "")
         color = _source_color(source, source_list)
         title = _escape(item["title"])
-        url = item.get("url", "")
+        url = _escape(item.get("url", ""))
+        ai_summary = item.get("ai_summary", "")
         is_hl = i in highlight_indices
         hl_class = " highlighted" if is_hl else ""
         hl_tag = '<span class="highlight-tag">&#9733; Highlight</span>' if is_hl else ""
-        link = (
-            f'<a class="article-link" href="{_escape(url)}" target="_blank" rel="noopener">{title}</a>'
-            if url else f'<span class="article-link">{title}</span>'
-        )
+
+        if ai_summary:
+            read_more = (
+                f'<a class="article-read-more" href="{url}" target="_blank" rel="noopener">Read full article &#8599;</a>'
+                if url else ""
+            )
+            content = f"""<details class="article-details">
+          <summary><span class="article-title-text">{title}</span><i class="article-toggle-icon">&#9660;</i></summary>
+          <div class="article-ai-summary" style="border-color:{color}">{_escape(ai_summary)}{read_more}</div>
+        </details>"""
+        elif url:
+            content = f'<a class="article-link" href="{url}" target="_blank" rel="noopener">{title}</a>'
+        else:
+            content = f'<span class="article-link">{title}</span>'
+
         out += f"""
     <li class="article-item{hl_class}" data-source="{_escape(source)}">
       <span class="article-num">{i + 1}</span>
@@ -462,7 +528,7 @@ def _render_rss_items(items: list, highlight_indices: set, source_list: list) ->
           <span class="source-chip" style="background:{color}">{_escape(source)}</span>
           {hl_tag}
         </div>
-        {link}
+        {content}
       </div>
     </li>"""
     return out
@@ -486,21 +552,33 @@ def _render_accordion(section: dict, open_first: bool) -> str:
     items_html = ""
     for i, item in enumerate(section["items"], 1):
         title = _escape(item["title"])
-        url = item.get("url", "")
-        link = (
-            f'<a class="acc-link" href="{_escape(url)}" target="_blank" rel="noopener">{title}</a>'
-            if url else f'<span class="acc-link">{title}</span>'
-        )
+        url = _escape(item.get("url", ""))
+        ai_summary = item.get("ai_summary", "")
         badges = []
         if "stars" in item:
             badges.append(f'<span class="meta-badge">&#11088; {_escape(str(item["stars"]))}</span>')
         if "score" in item:
             badges.append(f'<span class="meta-badge">&#8679; {item["score"]}</span>')
         meta_html = f'<div class="acc-meta">{"".join(badges)}</div>' if badges else ""
+
+        if ai_summary:
+            read_more = (
+                f'<a class="acc-read-more" href="{url}" target="_blank" rel="noopener">Read full article &#8599;</a>'
+                if url else ""
+            )
+            inner = f"""<details class="acc-details">
+            <summary><span class="acc-title-text">{title}</span><i class="acc-toggle-icon">&#9660;</i></summary>
+            <div class="acc-ai-summary" style="border-color:{accent}">{_escape(ai_summary)}{read_more}</div>
+          </details>{meta_html}"""
+        elif url:
+            inner = f'<a class="acc-link" href="{url}" target="_blank" rel="noopener">{title}</a>{meta_html}'
+        else:
+            inner = f'<span class="acc-link">{title}</span>{meta_html}'
+
         items_html += f"""
       <li class="acc-item">
         <div class="acc-index" style="background:{accent}">{i}</div>
-        <div><a class="acc-link" href="{_escape(url)}" target="_blank" rel="noopener">{title}</a>{meta_html}</div>
+        <div style="flex:1">{inner}</div>
       </li>"""
 
     return f"""
