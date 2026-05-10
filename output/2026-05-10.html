@@ -281,6 +281,60 @@ body { font-family: Georgia, "Times New Roman", serif; background: var(--bg); co
   display: inline-flex; align-items: center; gap: 3px;
 }
 
+/* ── Per-article dropdown ─────────────────────────── */
+.article-details { width: 100%; }
+.article-details > summary {
+  list-style: none; cursor: pointer; user-select: none;
+  display: flex; align-items: center; gap: 8px;
+}
+.article-details > summary::-webkit-details-marker { display: none; }
+.article-title-text {
+  flex: 1; font-size: .9rem; font-weight: 600; color: var(--text); line-height: 1.45;
+}
+.article-details[open] .article-title-text { color: #553c9a; }
+.article-toggle-icon {
+  font-size: .6rem; color: var(--muted); transition: transform .2s; flex-shrink: 0;
+}
+.article-details[open] .article-toggle-icon { transform: rotate(180deg); }
+.article-ai-summary {
+  font-size: .83rem; line-height: 1.65; color: var(--sub);
+  background: #f7f9fc; border-left: 3px solid var(--border);
+  border-radius: 0 6px 6px 0; padding: 10px 14px; margin-top: 8px;
+  animation: slideDown .2s ease-out;
+}
+.article-read-more {
+  display: inline-block; margin-top: 6px;
+  font-family: Arial, sans-serif; font-size: .76rem; font-weight: 600;
+  color: #553c9a; text-decoration: none;
+}
+.article-read-more:hover { text-decoration: underline; }
+
+/* acc-item dropdown */
+.acc-details { width: 100%; }
+.acc-details > summary {
+  list-style: none; cursor: pointer; user-select: none;
+  display: flex; align-items: center; gap: 6px;
+}
+.acc-details > summary::-webkit-details-marker { display: none; }
+.acc-title-text { flex: 1; font-weight: 600; color: var(--text); line-height: 1.45; }
+.acc-details[open] .acc-title-text { color: #553c9a; }
+.acc-toggle-icon {
+  font-size: .6rem; color: var(--muted); transition: transform .2s; flex-shrink: 0;
+}
+.acc-details[open] .acc-toggle-icon { transform: rotate(180deg); }
+.acc-ai-summary {
+  font-size: .8rem; line-height: 1.6; color: var(--sub);
+  background: #f7f9fc; border-left: 3px solid var(--border);
+  border-radius: 0 6px 6px 0; padding: 8px 12px; margin-top: 7px;
+  animation: slideDown .2s ease-out;
+}
+.acc-read-more {
+  display: inline-block; margin-top: 5px;
+  font-family: Arial, sans-serif; font-size: .74rem; font-weight: 600;
+  color: #553c9a; text-decoration: none;
+}
+.acc-read-more:hover { text-decoration: underline; }
+
 /* ── Footer ───────────────────────────────────────── */
 .footer {
   text-align: center; color: var(--muted); font-size: .74rem;
@@ -333,7 +387,7 @@ body { font-family: Georgia, "Times New Roman", serif; background: var(--bg); co
     <div class="hl-rank">3</div>
     <div class="hl-body">
       <span class="hl-source-badge" style="background:#667eea">Hacker News</span>
-      <a class="hl-title" href="https://kohlschuetter.github.io/blog/posts/2026/05/07/serial-ttl-connector/" target="_blank" rel="noopener">The Serial TTL connector we deserve</a>
+      <a class="hl-title" href="https://github.com/ThatXliner/rust-but-lisp" target="_blank" rel="noopener">Rust but Lisp</a>
       
     </div>
   </div>
@@ -342,7 +396,7 @@ body { font-family: Georgia, "Times New Roman", serif; background: var(--bg); co
     <div class="hl-rank">4</div>
     <div class="hl-body">
       <span class="hl-source-badge" style="background:#667eea">Hacker News</span>
-      <a class="hl-title" href="https://github.com/ThatXliner/rust-but-lisp" target="_blank" rel="noopener">Rust but Lisp</a>
+      <a class="hl-title" href="https://chrismorgan.info/no-query-strings" target="_blank" rel="noopener">I’ve banned query strings</a>
       
     </div>
   </div>
@@ -351,7 +405,7 @@ body { font-family: Georgia, "Times New Roman", serif; background: var(--bg); co
     <div class="hl-rank">5</div>
     <div class="hl-body">
       <span class="hl-source-badge" style="background:#667eea">Hacker News</span>
-      <a class="hl-title" href="https://chrismorgan.info/no-query-strings" target="_blank" rel="noopener">I’ve banned query strings</a>
+      <a class="hl-title" href="https://kohlschuetter.github.io/blog/posts/2026/05/07/serial-ttl-connector/" target="_blank" rel="noopener">The Serial TTL connector we deserve</a>
       
     </div>
   </div></div>
@@ -393,7 +447,7 @@ body { font-family: Georgia, "Times New Roman", serif; background: var(--bg); co
           <span class="source-chip" style="background:#667eea">Hacker News</span>
           <span class="highlight-tag">&#9733; Highlight</span>
         </div>
-        <a class="article-link" href="https://kohlschuetter.github.io/blog/posts/2026/05/07/serial-ttl-connector/" target="_blank" rel="noopener">The Serial TTL connector we deserve</a>
+        <a class="article-link" href="https://github.com/ThatXliner/rust-but-lisp" target="_blank" rel="noopener">Rust but Lisp</a>
       </div>
     </li>
     <li class="article-item highlighted" data-source="Hacker News">
@@ -403,7 +457,7 @@ body { font-family: Georgia, "Times New Roman", serif; background: var(--bg); co
           <span class="source-chip" style="background:#667eea">Hacker News</span>
           <span class="highlight-tag">&#9733; Highlight</span>
         </div>
-        <a class="article-link" href="https://github.com/ThatXliner/rust-but-lisp" target="_blank" rel="noopener">Rust but Lisp</a>
+        <a class="article-link" href="https://chrismorgan.info/no-query-strings" target="_blank" rel="noopener">I’ve banned query strings</a>
       </div>
     </li>
     <li class="article-item highlighted" data-source="Hacker News">
@@ -413,7 +467,7 @@ body { font-family: Georgia, "Times New Roman", serif; background: var(--bg); co
           <span class="source-chip" style="background:#667eea">Hacker News</span>
           <span class="highlight-tag">&#9733; Highlight</span>
         </div>
-        <a class="article-link" href="https://chrismorgan.info/no-query-strings" target="_blank" rel="noopener">I’ve banned query strings</a>
+        <a class="article-link" href="https://kohlschuetter.github.io/blog/posts/2026/05/07/serial-ttl-connector/" target="_blank" rel="noopener">The Serial TTL connector we deserve</a>
       </div>
     </li>
     <li class="article-item" data-source="The Verge">
@@ -573,7 +627,7 @@ body { font-family: Georgia, "Times New Roman", serif; background: var(--bg); co
           <span class="source-chip" style="background:#3182ce">Tinhte.vn</span>
           
         </div>
-        <a class="article-link" href="https://tinhte.vn/thread/dji-insta360-vui-long-dung-dua-nua.4134415/" target="_blank" rel="noopener">DJI, Insta360 vui lòng đừng đùa nữa</a>
+        <a class="article-link" href="https://tinhte.vn/thread/vu-khi-laser-locust-khac-tinh-cua-drone-an-toan-cho-bau-troi-dan-dung.4134341/" target="_blank" rel="noopener">Vũ khí laser LOCUST: khắc tinh của drone, an toàn cho bầu trời dân dụng</a>
       </div>
     </li>
     <li class="article-item" data-source="Tinhte.vn">
@@ -583,7 +637,7 @@ body { font-family: Georgia, "Times New Roman", serif; background: var(--bg); co
           <span class="source-chip" style="background:#3182ce">Tinhte.vn</span>
           
         </div>
-        <a class="article-link" href="https://tinhte.vn/thread/mot-y-tuong-ve-apple-glass-mong-la-no-khong-that-hihihi.4134416/" target="_blank" rel="noopener">Một ý tưởng về Apple Glass, mong là nó không thật hihihi</a>
+        <a class="article-link" href="https://tinhte.vn/thread/dji-insta360-vui-long-dung-dua-nua.4134415/" target="_blank" rel="noopener">DJI, Insta360 vui lòng đừng đùa nữa</a>
       </div>
     </li>
     <li class="article-item" data-source="Tinhte.vn">
@@ -593,7 +647,7 @@ body { font-family: Georgia, "Times New Roman", serif; background: var(--bg); co
           <span class="source-chip" style="background:#3182ce">Tinhte.vn</span>
           
         </div>
-        <a class="article-link" href="https://tinhte.vn/thread/microsoft-them-5-gesture-moi-cho-touchpad-tren-windows-11.4134275/" target="_blank" rel="noopener">Microsoft thêm 5 gesture mới cho Touchpad trên Windows 11</a>
+        <a class="article-link" href="https://tinhte.vn/thread/mot-y-tuong-ve-apple-glass-mong-la-no-khong-that-hihihi.4134416/" target="_blank" rel="noopener">Một ý tưởng về Apple Glass, mong là nó không thật hihihi</a>
       </div>
     </li>
     <li class="article-item" data-source="Tinhte.vn">
@@ -603,7 +657,7 @@ body { font-family: Georgia, "Times New Roman", serif; background: var(--bg); co
           <span class="source-chip" style="background:#3182ce">Tinhte.vn</span>
           
         </div>
-        <a class="article-link" href="https://tinhte.vn/thread/trai-nghiem-nhanh-ford-ranger-raptor-3-0l-v6-moi-van-la-dinh-cao-ban-tai-nhung-la-gan-400-ma-luc.4134285/" target="_blank" rel="noopener">Trải nghiệm nhanh Ford Ranger Raptor 3.0L V6 mới: Vẫn là đỉnh cao bán tải, nhưng là gần 400 mã lực</a>
+        <a class="article-link" href="https://tinhte.vn/thread/microsoft-them-5-gesture-moi-cho-touchpad-tren-windows-11.4134275/" target="_blank" rel="noopener">Microsoft thêm 5 gesture mới cho Touchpad trên Windows 11</a>
       </div>
     </li>
     <li class="article-item" data-source="Tinhte.vn">
@@ -613,7 +667,7 @@ body { font-family: Georgia, "Times New Roman", serif; background: var(--bg); co
           <span class="source-chip" style="background:#3182ce">Tinhte.vn</span>
           
         </div>
-        <a class="article-link" href="https://tinhte.vn/thread/markdown-va-html-ra-doi-tu-rat-lau-lai-tro-thanh-dinh-dang-noi-dung-ma-ai-agent-cuc-ki-ua-thich.4134303/" target="_blank" rel="noopener">Markdown và HTML ra đời từ rất lâu, lại trở thành định dạng nội dung mà AI Agent cực kì ưa thích</a>
+        <a class="article-link" href="https://tinhte.vn/thread/trai-nghiem-nhanh-ford-ranger-raptor-3-0l-v6-moi-van-la-dinh-cao-ban-tai-nhung-la-gan-400-ma-luc.4134285/" target="_blank" rel="noopener">Trải nghiệm nhanh Ford Ranger Raptor 3.0L V6 mới: Vẫn là đỉnh cao bán tải, nhưng là gần 400 mã lực</a>
       </div>
     </li></ul>
   </div>
@@ -632,23 +686,23 @@ body { font-family: Georgia, "Times New Roman", serif; background: var(--bg); co
       <ul class="acc-list">
       <li class="acc-item">
         <div class="acc-index" style="background:#11998e">1</div>
-        <div><a class="acc-link" href="https://github.com/anthropics/financial-services" target="_blank" rel="noopener">anthropics / financial-services</a><div class="acc-meta"><span class="meta-badge">&#11088; 17,451</span></div></div>
+        <div style="flex:1"><a class="acc-link" href="https://github.com/anthropics/financial-services" target="_blank" rel="noopener">anthropics / financial-services</a><div class="acc-meta"><span class="meta-badge">&#11088; 17,507</span></div></div>
       </li>
       <li class="acc-item">
         <div class="acc-index" style="background:#11998e">2</div>
-        <div><a class="acc-link" href="https://github.com/datawhalechina/hello-agents" target="_blank" rel="noopener">datawhalechina / hello-agents</a><div class="acc-meta"><span class="meta-badge">&#11088; 45,714</span></div></div>
+        <div style="flex:1"><a class="acc-link" href="https://github.com/datawhalechina/hello-agents" target="_blank" rel="noopener">datawhalechina / hello-agents</a><div class="acc-meta"><span class="meta-badge">&#11088; 45,741</span></div></div>
       </li>
       <li class="acc-item">
         <div class="acc-index" style="background:#11998e">3</div>
-        <div><a class="acc-link" href="https://github.com/HKUDS/ViMax" target="_blank" rel="noopener">HKUDS / ViMax</a><div class="acc-meta"><span class="meta-badge">&#11088; 3,605</span></div></div>
+        <div style="flex:1"><a class="acc-link" href="https://github.com/HKUDS/ViMax" target="_blank" rel="noopener">HKUDS / ViMax</a><div class="acc-meta"><span class="meta-badge">&#11088; 3,608</span></div></div>
       </li>
       <li class="acc-item">
         <div class="acc-index" style="background:#11998e">4</div>
-        <div><a class="acc-link" href="https://github.com/CloakHQ/CloakBrowser" target="_blank" rel="noopener">CloakHQ / CloakBrowser</a><div class="acc-meta"><span class="meta-badge">&#11088; 3,986</span></div></div>
+        <div style="flex:1"><a class="acc-link" href="https://github.com/CloakHQ/CloakBrowser" target="_blank" rel="noopener">CloakHQ / CloakBrowser</a><div class="acc-meta"><span class="meta-badge">&#11088; 4,000</span></div></div>
       </li>
       <li class="acc-item">
         <div class="acc-index" style="background:#11998e">5</div>
-        <div><a class="acc-link" href="https://github.com/freemocap/freemocap" target="_blank" rel="noopener">freemocap / freemocap</a><div class="acc-meta"><span class="meta-badge">&#11088; 8,381</span></div></div>
+        <div style="flex:1"><a class="acc-link" href="https://github.com/freemocap/freemocap" target="_blank" rel="noopener">freemocap / freemocap</a><div class="acc-meta"><span class="meta-badge">&#11088; 8,381</span></div></div>
       </li>
       </ul>
     </div>
@@ -665,23 +719,23 @@ body { font-family: Georgia, "Times New Roman", serif; background: var(--bg); co
       <ul class="acc-list">
       <li class="acc-item">
         <div class="acc-index" style="background:#11998e">1</div>
-        <div><a class="acc-link" href="https://github.com/anthropics/financial-services" target="_blank" rel="noopener">anthropics / financial-services</a><div class="acc-meta"><span class="meta-badge">&#11088; 17,451</span></div></div>
+        <div style="flex:1"><a class="acc-link" href="https://github.com/anthropics/financial-services" target="_blank" rel="noopener">anthropics / financial-services</a><div class="acc-meta"><span class="meta-badge">&#11088; 17,507</span></div></div>
       </li>
       <li class="acc-item">
         <div class="acc-index" style="background:#11998e">2</div>
-        <div><a class="acc-link" href="https://github.com/bytedance/UI-TARS-desktop" target="_blank" rel="noopener">bytedance / UI-TARS-desktop</a><div class="acc-meta"><span class="meta-badge">&#11088; 31,438</span></div></div>
+        <div style="flex:1"><a class="acc-link" href="https://github.com/bytedance/UI-TARS-desktop" target="_blank" rel="noopener">bytedance / UI-TARS-desktop</a><div class="acc-meta"><span class="meta-badge">&#11088; 31,461</span></div></div>
       </li>
       <li class="acc-item">
         <div class="acc-index" style="background:#11998e">3</div>
-        <div><a class="acc-link" href="https://github.com/rohitg00/agentmemory" target="_blank" rel="noopener">rohitg00 / agentmemory</a><div class="acc-meta"><span class="meta-badge">&#11088; 3,461</span></div></div>
+        <div style="flex:1"><a class="acc-link" href="https://github.com/rohitg00/agentmemory" target="_blank" rel="noopener">rohitg00 / agentmemory</a><div class="acc-meta"><span class="meta-badge">&#11088; 3,495</span></div></div>
       </li>
       <li class="acc-item">
         <div class="acc-index" style="background:#11998e">4</div>
-        <div><a class="acc-link" href="https://github.com/datawhalechina/hello-agents" target="_blank" rel="noopener">datawhalechina / hello-agents</a><div class="acc-meta"><span class="meta-badge">&#11088; 45,714</span></div></div>
+        <div style="flex:1"><a class="acc-link" href="https://github.com/datawhalechina/hello-agents" target="_blank" rel="noopener">datawhalechina / hello-agents</a><div class="acc-meta"><span class="meta-badge">&#11088; 45,741</span></div></div>
       </li>
       <li class="acc-item">
         <div class="acc-index" style="background:#11998e">5</div>
-        <div><a class="acc-link" href="https://github.com/datawhalechina/easy-vibe" target="_blank" rel="noopener">datawhalechina / easy-vibe</a><div class="acc-meta"><span class="meta-badge">&#11088; 8,550</span></div></div>
+        <div style="flex:1"><a class="acc-link" href="https://github.com/datawhalechina/easy-vibe" target="_blank" rel="noopener">datawhalechina / easy-vibe</a><div class="acc-meta"><span class="meta-badge">&#11088; 8,572</span></div></div>
       </li>
       </ul>
     </div>
