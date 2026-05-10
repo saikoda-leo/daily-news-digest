@@ -167,8 +167,11 @@ def test_summarize_items_structured_truncates_to_6000():
     with patch.object(summarizer, "_get_client", return_value=mock_client):
         summarizer.summarize_items_structured("Section", items)
     sent_prompt = mock_client.messages.create.call_args.kwargs["messages"][0]["content"]
-    # The xs in the prompt should be capped at 6000, not 10000
-    assert sent_prompt.count("x") == 6000
+    # The xs in the prompt should be capped at 6000, not 10000.
+    # The prompt template itself contains 3 x's ("exactly" x2 in template text), so total is 6003.
+    x_in_template = sent_prompt.count("x") - sent_prompt.replace("x" * 6000, "").count("x")
+    assert "x" * 6001 not in sent_prompt
+    assert "x" * 6000 in sent_prompt
 
 
 def test_summarize_items_structured_uses_summary_when_no_full_text():
@@ -181,7 +184,9 @@ def test_summarize_items_structured_uses_summary_when_no_full_text():
     with patch.object(summarizer, "_get_client", return_value=mock_client):
         summarizer.summarize_items_structured("Section", items)
     sent_prompt = mock_client.messages.create.call_args.kwargs["messages"][0]["content"]
-    assert sent_prompt.count("y") == 500  # used summary fallback
+    # Verify summary[:1000] is used: 500 y's from summary. Check via substring presence.
+    assert "y" * 500 in sent_prompt
+    assert "y" * 501 not in sent_prompt
 
 
 def test_summarize_items_structured_uses_summary_when_full_text_short():
@@ -195,7 +200,9 @@ def test_summarize_items_structured_uses_summary_when_full_text_short():
         summarizer.summarize_items_structured("Section", items)
     sent_prompt = mock_client.messages.create.call_args.kwargs["messages"][0]["content"]
     assert "tiny" not in sent_prompt
-    assert sent_prompt.count("y") == 500
+    # Verify summary[:1000] is used: 500 y's from summary. Check via substring presence.
+    assert "y" * 500 in sent_prompt
+    assert "y" * 501 not in sent_prompt
 
 
 def test_summarize_items_structured_max_tokens_formula():
