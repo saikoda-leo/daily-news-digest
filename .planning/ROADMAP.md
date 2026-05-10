@@ -21,8 +21,8 @@ Two phases deliver the full-text structured breakdown feature. Phase 1 wires in 
   3. All RSS article fetches complete before summarization starts, and total fetch time for 20-30 articles is visibly parallel (not sequential)
   4. A malformed or truncated Claude JSON response does not crash the pipeline — the affected article gets empty structured fields and the rest of the digest renders normally
 **Plans**: 3 plans
-  - [ ] 01-01-PLAN.md — Article fetcher module + RSS HTML stripping (FETCH-01..05)
-  - [ ] 01-02-PLAN.md — Structured Claude summarizer (SUMM-01..03)
+  - [x] 01-01-PLAN.md — Article fetcher module + RSS HTML stripping (FETCH-01..05)
+  - [x] 01-02-PLAN.md — Structured Claude summarizer (SUMM-01..03)
   - [ ] 01-03-PLAN.md — Wire fetch + branched summarizer into main.py (SUMM-04, FETCH-05 orchestration)
 
 ### Phase 2: Frontend
