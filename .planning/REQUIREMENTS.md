@@ -22,10 +22,10 @@
 
 ### HTML Rendering
 
-- [ ] **REND-01**: Article dropdown in HTML shows "Core idea:" label followed by the core idea sentence
-- [ ] **REND-02**: Article dropdown shows a numbered list (1–5) of key points below the core idea
-- [ ] **REND-03**: "Read full article" link appears at the bottom of the dropdown (unchanged behavior)
-- [ ] **REND-04**: If an article has no structured summary (fallback case), dropdown degrades gracefully to a plain link (no broken layout)
+- [ ] **REND-01**: Core idea sentence is always-visible below each article title, outside the `<details>` dropdown, so the user can scan all stories without expanding anything
+- [ ] **REND-02**: Expanding an article dropdown shows a numbered list (1–5) of key points
+- [ ] **REND-03**: "Read full article" link appears at the bottom of every expanded dropdown (unchanged behavior)
+- [ ] **REND-04**: If an article has no structured summary (fallback case), no core idea line is shown and the dropdown degrades gracefully to a plain link (no broken layout)
 
 ## v2 Requirements
 
@@ -74,4 +74,4 @@
 
 ---
 *Requirements defined: 2026-05-10*
-*Last updated: 2026-05-10 after initial definition*
+*Last updated: 2026-05-10 — traceability confirmed after roadmap creation*
