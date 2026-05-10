@@ -1,4 +1,5 @@
 import json
+import re
 from typing import Optional
 import anthropic
 
@@ -70,11 +71,8 @@ def get_top_highlights(items: list) -> list:
             messages=[{"role": "user", "content": prompt}],
         )
         raw = response.content[0].text.strip()
-        # strip markdown code fences if present
-        if raw.startswith("```"):
-            raw = raw.split("```")[1]
-            if raw.startswith("json"):
-                raw = raw[4:]
+        raw = re.sub(r'^```\w*\s*', '', raw)
+        raw = re.sub(r'\s*```$', '', raw).strip()
         highlights = json.loads(raw)
         # validate and clamp indices
         valid = [h for h in highlights if isinstance(h.get("index"), int) and 0 <= h["index"] < len(items)]

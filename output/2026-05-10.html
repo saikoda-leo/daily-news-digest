@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daily Digest — 2026-05-10</title>
+  <style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #1a1a2e;
+  --gold: #e8b84b;
+  --bg:   #f0f2f5;
+  --card: #ffffff;
+  --text: #1a202c;
+  --sub:  #4a5568;
+  --muted:#a0aec0;
+  --border:#e2e8f0;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: Georgia, "Times New Roman", serif; background: var(--bg); color: var(--text); }
+
+/* ── Masthead ─────────────────────────────────────── */
+.masthead {
+  background: var(--navy);
+  text-align: center;
+  padding: 40px 24px 26px;
+  border-bottom: 4px solid var(--gold);
+}
+.masthead-name {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-weight: 900;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-shadow: 0 2px 14px rgba(232,184,75,.3);
+  margin-bottom: 6px;
+}
+.masthead-sub {
+  font-size: .88rem; color: #a0aec0; font-style: italic; margin-bottom: 14px;
+}
+.masthead-meta {
+  display: flex; justify-content: center; flex-wrap: wrap;
+  gap: 6px 20px; font-size: .78rem; color: var(--muted);
+  font-family: Arial, sans-serif;
+  border-top: 1px solid #2d3748; padding-top: 12px;
+}
+
+/* ── Nav pills ────────────────────────────────────── */
+.section-nav {
+  background: var(--navy);
+  padding: 10px 24px 14px;
+  display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+  border-bottom: 2px solid #2d3748;
+}
+.nav-pill {
+  font-family: Arial, sans-serif; font-size: .74rem; font-weight: 600;
+  padding: 4px 14px; border-radius: 20px; text-decoration: none;
+  color: #a0aec0; border: 1.5px solid #2d3748;
+  transition: color .15s, border-color .15s;
+  white-space: nowrap;
+}
+.nav-pill:hover { color: var(--gold); border-color: var(--gold); }
+
+/* ── Page wrapper ─────────────────────────────────── */
+.page {
+  max-width: 1160px; margin: 0 auto; padding: 36px 24px 64px;
+}
+
+/* ── Section divider ──────────────────────────────── */
+.divider {
+  font-family: Arial, sans-serif; font-size: .68rem; font-weight: 800;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+  display: flex; align-items: center; gap: 12px; margin-bottom: 22px;
+}
+.divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+
+/* ══════════════════════════════════════════════════
+   TOP 5 HIGHLIGHTS
+   ══════════════════════════════════════════════════ */
+.highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto;
+  gap: 18px;
+  margin-bottom: 42px;
+}
+/* top-2 cards span extra height visually via padding */
+.hl-card-0, .hl-card-1 { grid-column: span 1; }
+.hl-card-2, .hl-card-3, .hl-card-4 { grid-column: span 1; }
+
+@media (max-width: 860px) {
+  .highlights-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .highlights-grid { grid-template-columns: 1fr; }
+}
+
+.hl-card {
+  background: var(--card);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(0,0,0,.08);
+  display: flex; flex-direction: column;
+  transition: transform .18s, box-shadow .18s;
+  position: relative;
+}
+.hl-card:hover { transform: translateY(-4px); box-shadow: 0 10px 32px rgba(0,0,0,.14); }
+
+/* rank badge */
+.hl-rank {
+  position: absolute; top: 14px; left: 14px;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: rgba(0,0,0,.18);
+  color: #fff; font-family: Arial, sans-serif;
+  font-size: .75rem; font-weight: 900;
+  display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(4px);
+  z-index: 1;
+}
+
+.hl-accent-bar {
+  height: 6px; width: 100%;
+}
+
+.hl-body { padding: 18px 18px 20px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+
+.hl-source-badge {
+  font-family: Arial, sans-serif; font-size: .68rem; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 20px; color: #fff;
+  display: inline-block; align-self: flex-start;
+}
+
+.hl-title {
+  font-size: .97rem; font-weight: 700; line-height: 1.45; color: var(--text);
+  text-decoration: none; display: block;
+}
+.hl-title:hover { color: #553c9a; text-decoration: underline; }
+
+.hl-reason {
+  font-size: .82rem; line-height: 1.6; color: var(--sub);
+  font-style: italic;
+  border-left: 3px solid;
+  padding-left: 10px;
+}
+
+/* ══════════════════════════════════════════════════
+   ALL RSS STORIES
+   ══════════════════════════════════════════════════ */
+.rss-section {
+  background: var(--card);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 3px 14px rgba(0,0,0,.07);
+  margin-bottom: 36px;
+}
+.rss-section-header {
+  padding: 16px 24px;
+  display: flex; align-items: center; gap: 10px;
+  color: #fff;
+}
+.rss-section-header .sec-icon { font-size: 1.3rem; }
+.rss-section-header .sec-title {
+  font-size: 1rem; font-weight: 700; font-family: Arial, sans-serif;
+  letter-spacing: .02em; flex: 1;
+}
+.rss-section-header .sec-count {
+  font-family: Arial, sans-serif; font-size: .7rem; font-weight: 600;
+  background: rgba(255,255,255,.2); border-radius: 20px; padding: 2px 10px;
+}
+
+/* source filter tabs */
+.source-tabs {
+  display: flex; gap: 0; flex-wrap: wrap;
+  border-bottom: 2px solid var(--border);
+  padding: 0 16px;
+  background: #fafbfc;
+}
+.source-tab {
+  font-family: Arial, sans-serif; font-size: .74rem; font-weight: 600;
+  padding: 10px 16px; cursor: pointer; border: none; background: none;
+  color: var(--muted); border-bottom: 2px solid transparent;
+  margin-bottom: -2px; transition: color .15s, border-color .15s;
+  white-space: nowrap;
+}
+.source-tab:hover { color: var(--text); }
+.source-tab.active { color: var(--text); border-bottom-color: #667eea; }
+
+/* article list */
+.article-list { list-style: none; }
+
+.article-item {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--border);
+  transition: background .12s;
+}
+.article-item:last-child { border-bottom: none; }
+.article-item:hover { background: #f7f9fc; }
+.article-item.highlighted { background: #fffbeb; }
+.article-item.hidden { display: none; }
+
+.article-num {
+  font-family: Arial, sans-serif; font-size: .72rem; font-weight: 800;
+  color: var(--muted); min-width: 22px; padding-top: 2px; text-align: right;
+}
+.article-content { flex: 1; min-width: 0; }
+
+.article-meta-top {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 5px; flex-wrap: wrap;
+}
+.source-chip {
+  font-family: Arial, sans-serif; font-size: .64rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .06em;
+  padding: 2px 9px; border-radius: 20px; color: #fff;
+  flex-shrink: 0;
+}
+.star-badge {
+  font-family: Arial, sans-serif; font-size: .7rem;
+  color: var(--muted); display: flex; align-items: center; gap: 3px;
+}
+
+.article-link {
+  font-size: .9rem; font-weight: 600; color: var(--text);
+  text-decoration: none; line-height: 1.45; display: block;
+}
+.article-link:hover { color: #553c9a; text-decoration: underline; }
+
+.highlight-tag {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-family: Arial, sans-serif; font-size: .68rem; font-weight: 700;
+  color: #b7791f; background: #fefcbf; border-radius: 20px; padding: 2px 9px;
+}
+
+/* ── Accordion (GitHub / Reddit) ─────────────────── */
+.other-sections { display: flex; flex-direction: column; gap: 14px; }
+
+.accordion {
+  background: var(--card); border-radius: 14px; overflow: hidden;
+  box-shadow: 0 3px 14px rgba(0,0,0,.07);
+}
+.accordion[open] { box-shadow: 0 6px 26px rgba(0,0,0,.11); }
+.accordion > summary {
+  list-style: none; cursor: pointer; user-select: none;
+  padding: 14px 20px; display: flex; align-items: center; gap: 10px; color: #fff;
+}
+.accordion > summary::-webkit-details-marker { display: none; }
+.acc-chevron { font-style: normal; font-size: .75rem; transition: transform .22s; flex-shrink: 0; }
+.accordion[open] > summary .acc-chevron { transform: rotate(180deg); }
+.acc-body { padding: 16px 22px 20px; animation: slideDown .2s ease-out; }
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.acc-summary-box {
+  font-size: .85rem; line-height: 1.7; color: var(--sub);
+  font-style: italic; background: #f7f9fc;
+  border-left: 3px solid; border-radius: 0 8px 8px 0;
+  padding: 9px 14px; margin-bottom: 14px;
+}
+.acc-list { list-style: none; }
+.acc-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 9px 0; border-bottom: 1px solid var(--border);
+  font-size: .86rem; font-family: Arial, sans-serif;
+}
+.acc-item:last-child { border-bottom: none; }
+.acc-index {
+  font-size: .68rem; font-weight: 700; min-width: 20px; height: 20px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  color: #fff; flex-shrink: 0; margin-top: 2px;
+}
+.acc-link { color: var(--text); text-decoration: none; font-weight: 600; line-height: 1.45; }
+.acc-link:hover { color: #553c9a; text-decoration: underline; }
+.acc-meta { font-size: .72rem; color: var(--muted); margin-top: 3px; display: flex; gap: 6px; }
+.meta-badge {
+  background: #edf2f7; border-radius: 20px; padding: 1px 7px;
+  display: inline-flex; align-items: center; gap: 3px;
+}
+
+/* ── Footer ───────────────────────────────────────── */
+.footer {
+  text-align: center; color: var(--muted); font-size: .74rem;
+  font-family: Arial, sans-serif;
+  margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border);
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-name">&#9733; The Daily Digest &#9733;</div>
+  <div class="masthead-sub">Your personal newspaper, curated by AI</div>
+  <div class="masthead-meta">
+    <span>&#128197; 2026-05-10</span>
+    <span>&#183;</span>
+    <span>&#128279; 45 stories</span>
+    <span>&#183;</span>
+    <span>&#9733; 5 highlights</span>
+  </div>
+</header>
+
+<nav class="section-nav"><a class="nav-pill" href="#highlights">&#9733; Highlights</a><a class="nav-pill" href="#top-stories">&#128240; All Stories</a><a class="nav-pill" href="#github-trending-—-python">🐙 GitHub Trending — python</a><a class="nav-pill" href="#github-trending">🐙 GitHub Trending</a><a class="nav-pill" href="#r-programming">🤖 r/programming</a><a class="nav-pill" href="#r-machinelearning">🤖 r/MachineLearning</a></nav>
+
+<div class="page">
+
+  <!-- TOP 5 HIGHLIGHTS -->
+  <div class="divider" id="highlights">&#9733; Top 5 Highlights of the Day</div>
+  <div class="highlights-grid">
+  <div class="hl-card hl-card-0">
+    <div class="hl-accent-bar" style="background:#667eea"></div>
+    <div class="hl-rank">1</div>
+    <div class="hl-body">
+      <span class="hl-source-badge" style="background:#667eea">Hacker News</span>
+      <a class="hl-title" href="https://twitter.com/jarredsumner/status/2053047748191232310" target="_blank" rel="noopener">Bun's experimental Rust rewrite hits 99.8% test compatibility on Linux x64 glibc</a>
+      
+    </div>
+  </div>
+  <div class="hl-card hl-card-1">
+    <div class="hl-accent-bar" style="background:#667eea"></div>
+    <div class="hl-rank">2</div>
+    <div class="hl-body">
+      <span class="hl-source-badge" style="background:#667eea">Hacker News</span>
+      <a class="hl-title" href="https://blog.archive.org/2026/05/06/internet-archive-switzerland-expanding-a-global-mission-to-preserve-knowledge/" target="_blank" rel="noopener">Internet Archive Switzerland</a>
+      
+    </div>
+  </div>
+  <div class="hl-card hl-card-2">
+    <div class="hl-accent-bar" style="background:#667eea"></div>
+    <div class="hl-rank">3</div>
+    <div class="hl-body">
+      <span class="hl-source-badge" style="background:#667eea">Hacker News</span>
+      <a class="hl-title" href="https://github.com/ThatXliner/rust-but-lisp" target="_blank" rel="noopener">Rust but Lisp</a>
+      
+    </div>
+  </div>
+  <div class="hl-card hl-card-3">
+    <div class="hl-accent-bar" style="background:#667eea"></div>
+    <div class="hl-rank">4</div>
+    <div class="hl-body">
+      <span class="hl-source-badge" style="background:#667eea">Hacker News</span>
+      <a class="hl-title" href="https://kohlschuetter.github.io/blog/posts/2026/05/07/serial-ttl-connector/" target="_blank" rel="noopener">The Serial TTL connector we deserve</a>
+      
+    </div>
+  </div>
+  <div class="hl-card hl-card-4">
+    <div class="hl-accent-bar" style="background:#667eea"></div>
+    <div class="hl-rank">5</div>
+    <div class="hl-body">
+      <span class="hl-source-badge" style="background:#667eea">Hacker News</span>
+      <a class="hl-title" href="https://chrismorgan.info/no-query-strings" target="_blank" rel="noopener">I’ve banned query strings</a>
+      
+    </div>
+  </div></div>
+
+  <!-- ALL RSS STORIES -->
+  <div class="divider" id="top-stories">&#128240; All Stories</div>
+  <div class="rss-section">
+    <div class="rss-section-header" style="background:linear-gradient(135deg,#667eea,#764ba2)">
+      <span class="sec-icon">&#128240;</span>
+      <span class="sec-title">RSS News Feed</span>
+      <span class="sec-count">25 stories</span>
+    </div>
+    <div class="source-tabs"><button class="source-tab active" data-source="all">All</button><button class="source-tab" data-source="Hacker News">Hacker News</button><button class="source-tab" data-source="The Verge">The Verge</button><button class="source-tab" data-source="VnExpress">VnExpress</button><button class="source-tab" data-source="Tuổi Trẻ">Tuổi Trẻ</button><button class="source-tab" data-source="Tinhte.vn">Tinhte.vn</button></div>
+    <ul class="article-list">
+    <li class="article-item highlighted" data-source="Hacker News">
+      <span class="article-num">1</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#667eea">Hacker News</span>
+          <span class="highlight-tag">&#9733; Highlight</span>
+        </div>
+        <a class="article-link" href="https://twitter.com/jarredsumner/status/2053047748191232310" target="_blank" rel="noopener">Bun's experimental Rust rewrite hits 99.8% test compatibility on Linux x64 glibc</a>
+      </div>
+    </li>
+    <li class="article-item highlighted" data-source="Hacker News">
+      <span class="article-num">2</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#667eea">Hacker News</span>
+          <span class="highlight-tag">&#9733; Highlight</span>
+        </div>
+        <a class="article-link" href="https://blog.archive.org/2026/05/06/internet-archive-switzerland-expanding-a-global-mission-to-preserve-knowledge/" target="_blank" rel="noopener">Internet Archive Switzerland</a>
+      </div>
+    </li>
+    <li class="article-item highlighted" data-source="Hacker News">
+      <span class="article-num">3</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#667eea">Hacker News</span>
+          <span class="highlight-tag">&#9733; Highlight</span>
+        </div>
+        <a class="article-link" href="https://github.com/ThatXliner/rust-but-lisp" target="_blank" rel="noopener">Rust but Lisp</a>
+      </div>
+    </li>
+    <li class="article-item highlighted" data-source="Hacker News">
+      <span class="article-num">4</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#667eea">Hacker News</span>
+          <span class="highlight-tag">&#9733; Highlight</span>
+        </div>
+        <a class="article-link" href="https://kohlschuetter.github.io/blog/posts/2026/05/07/serial-ttl-connector/" target="_blank" rel="noopener">The Serial TTL connector we deserve</a>
+      </div>
+    </li>
+    <li class="article-item highlighted" data-source="Hacker News">
+      <span class="article-num">5</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#667eea">Hacker News</span>
+          <span class="highlight-tag">&#9733; Highlight</span>
+        </div>
+        <a class="article-link" href="https://chrismorgan.info/no-query-strings" target="_blank" rel="noopener">I’ve banned query strings</a>
+      </div>
+    </li>
+    <li class="article-item" data-source="The Verge">
+      <span class="article-num">6</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#e53e3e">The Verge</span>
+          
+        </div>
+        <a class="article-link" href="https://www.theverge.com/gadgets/926942/dyson-360-vis-nav-robot-vacuum-woot-dust-busting-deals-sale" target="_blank" rel="noopener">Dyson’s powerful 360 Vis Nav robovac is down to $279.99 for a limited time</a>
+      </div>
+    </li>
+    <li class="article-item" data-source="The Verge">
+      <span class="article-num">7</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#e53e3e">The Verge</span>
+          
+        </div>
+        <a class="article-link" href="https://www.theverge.com/gadgets/927310/best-digital-gift-ideas-mothers-day-online-cards-subscriptions-2026" target="_blank" rel="noopener">These great digital gifts will arrive just in time for Mother’s Day</a>
+      </div>
+    </li>
+    <li class="article-item" data-source="The Verge">
+      <span class="article-num">8</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#e53e3e">The Verge</span>
+          
+        </div>
+        <a class="article-link" href="https://www.theverge.com/entertainment/926911/snow-video-games-moomins-froggy" target="_blank" rel="noopener">Let it snow</a>
+      </div>
+    </li>
+    <li class="article-item" data-source="The Verge">
+      <span class="article-num">9</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#e53e3e">The Verge</span>
+          
+        </div>
+        <a class="article-link" href="https://www.theverge.com/tech/927177/zombies-run-boox-billie-eilish-installer" target="_blank" rel="noopener">The game that makes me actually want to exercise</a>
+      </div>
+    </li>
+    <li class="article-item" data-source="The Verge">
+      <span class="article-num">10</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#e53e3e">The Verge</span>
+          
+        </div>
+        <a class="article-link" href="https://www.theverge.com/tech/927442/nanosys-sqd-vs-rgb-led" target="_blank" rel="noopener">Quantum dot TVs beat RGB LED TVs, says the company that makes QDs for TVs</a>
+      </div>
+    </li>
+    <li class="article-item" data-source="VnExpress">
+      <span class="article-num">11</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#38a169">VnExpress</span>
+          
+        </div>
+        <a class="article-link" href="https://vnexpress.net/thu-gian-video-hai-chuyen-la-cau-thu-mung-hut-vi-tuong-lap-sieu-pham-5071579.html" target="_blank" rel="noopener">Cầu thủ mừng hụt vì tưởng lập siêu phẩm</a>
+      </div>
+    </li>
+    <li class="article-item" data-source="VnExpress">
+      <span class="article-num">12</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#38a169">VnExpress</span>
+          
+        </div>
+        <a class="article-link" href="https://vnexpress.net/co-the-chuyen-visa-du-lich-sang-visa-lao-dong-tai-viet-nam-khong-5070308.html" target="_blank" rel="noopener">Có thể chuyển visa du lịch sang visa lao động tại Việt Nam không?</a>
+      </div>
+    </li>
+    <li class="article-item" data-source="VnExpress">
+      <span class="article-num">13</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#38a169">VnExpress</span>
+          
+        </div>
+        <a class="article-link" href="https://vnexpress.net/co-the-xa-tri-khoi-u-nao-di-can-khong-5071935.html" target="_blank" rel="noopener">Có thể xạ trị khối u não di căn không?</a>
+      </div>
+    </li>
+    <li class="article-item" data-source="VnExpress">
+      <span class="article-num">14</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#38a169">VnExpress</span>
+          
+        </div>
+        <a class="article-link" href="https://vnexpress.net/bi-tang-huyet-ap-co-nen-an-trai-cay-ngot-5071903.html" target="_blank" rel="noopener">Bị tăng huyết áp có nên ăn trái cây ngọt?</a>
+      </div>
+    </li>
+    <li class="article-item" data-source="VnExpress">
+      <span class="article-num">15</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#38a169">VnExpress</span>
+          
+        </div>
+        <a class="article-link" href="https://vnexpress.net/nguoi-benh-ho-hap-man-tinh-co-nen-dung-dieu-hoa-ca-ngay-5071901.html" target="_blank" rel="noopener">Người bệnh hô hấp mạn tính có nên dùng điều hòa cả ngày?</a>
+      </div>
+    </li>
+    <li class="article-item" data-source="Tuổi Trẻ">
+      <span class="article-num">16</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#d69e2e">Tuổi Trẻ</span>
+          
+        </div>
+        <a class="article-link" href="https://tuoitre.vn/hlv-kim-sang-sik-khong-de-dau-han-quoc-nhung-tuyen-viet-nam-co-the-tien-xa-20260510061936833.htm" target="_blank" rel="noopener">HLV Kim Sang Sik: 'Không dễ đấu Hàn Quốc, nhưng tuyển Việt Nam có thể tiến xa'</a>
+      </div>
+    </li>
+    <li class="article-item" data-source="Tuổi Trẻ">
+      <span class="article-num">17</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#d69e2e">Tuổi Trẻ</span>
+          
+        </div>
+        <a class="article-link" href="https://tuoitre.vn/nhung-cong-trinh-nao-duoc-mien-giay-phep-xay-dung-theo-luat-moi-20260506165120069.htm" target="_blank" rel="noopener">Những công trình nào được miễn giấy phép xây dựng theo luật mới?</a>
+      </div>
+    </li>
+    <li class="article-item" data-source="Tuổi Trẻ">
+      <span class="article-num">18</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#d69e2e">Tuổi Trẻ</span>
+          
+        </div>
+        <a class="article-link" href="https://tuoitre.vn/tiet-lo-so-tien-mua-ban-do-cua-dan-cao-thu-co-tuong-trung-quoc-20260509211245124.htm" target="_blank" rel="noopener">Tiết lộ số tiền mua bán độ của dàn cao thủ cờ tướng Trung Quốc</a>
+      </div>
+    </li>
+    <li class="article-item" data-source="Tuổi Trẻ">
+      <span class="article-num">19</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#d69e2e">Tuổi Trẻ</span>
+          
+        </div>
+        <a class="article-link" href="https://tuoitre.vn/lich-truc-tiep-u17-chau-a-2026-viet-nam-dau-han-quoc-20260509152213775.htm" target="_blank" rel="noopener">Lịch trực tiếp U17 châu Á 2026: Việt Nam đấu Hàn Quốc</a>
+      </div>
+    </li>
+    <li class="article-item" data-source="Tuổi Trẻ">
+      <span class="article-num">20</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#d69e2e">Tuổi Trẻ</span>
+          
+        </div>
+        <a class="article-link" href="https://tuoitre.vn/tin-tuc-sang-10-5-lai-suat-lien-ngan-hang-qua-dem-ve-duoi-6-nhua-binh-minh-chia-co-tuc-khung-20260509154908722.htm" target="_blank" rel="noopener">Tin tức sáng 10-5: Lãi suất liên ngân hàng qua đêm về dưới 6%; Nhựa Bình Minh chia cổ tức 'khủng'</a>
+      </div>
+    </li>
+    <li class="article-item" data-source="Tinhte.vn">
+      <span class="article-num">21</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#3182ce">Tinhte.vn</span>
+          
+        </div>
+        <a class="article-link" href="https://tinhte.vn/thread/dji-insta360-vui-long-dung-dua-nua.4134415/" target="_blank" rel="noopener">DJI, Insta360 vui lòng đừng đùa nữa</a>
+      </div>
+    </li>
+    <li class="article-item" data-source="Tinhte.vn">
+      <span class="article-num">22</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#3182ce">Tinhte.vn</span>
+          
+        </div>
+        <a class="article-link" href="https://tinhte.vn/thread/mot-y-tuong-ve-apple-glass-mong-la-no-khong-that-hihihi.4134416/" target="_blank" rel="noopener">Một ý tưởng về Apple Glass, mong là nó không thật hihihi</a>
+      </div>
+    </li>
+    <li class="article-item" data-source="Tinhte.vn">
+      <span class="article-num">23</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#3182ce">Tinhte.vn</span>
+          
+        </div>
+        <a class="article-link" href="https://tinhte.vn/thread/microsoft-them-5-gesture-moi-cho-touchpad-tren-windows-11.4134275/" target="_blank" rel="noopener">Microsoft thêm 5 gesture mới cho Touchpad trên Windows 11</a>
+      </div>
+    </li>
+    <li class="article-item" data-source="Tinhte.vn">
+      <span class="article-num">24</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#3182ce">Tinhte.vn</span>
+          
+        </div>
+        <a class="article-link" href="https://tinhte.vn/thread/trai-nghiem-nhanh-ford-ranger-raptor-3-0l-v6-moi-van-la-dinh-cao-ban-tai-nhung-la-gan-400-ma-luc.4134285/" target="_blank" rel="noopener">Trải nghiệm nhanh Ford Ranger Raptor 3.0L V6 mới: Vẫn là đỉnh cao bán tải, nhưng là gần 400 mã lực</a>
+      </div>
+    </li>
+    <li class="article-item" data-source="Tinhte.vn">
+      <span class="article-num">25</span>
+      <div class="article-content">
+        <div class="article-meta-top">
+          <span class="source-chip" style="background:#3182ce">Tinhte.vn</span>
+          
+        </div>
+        <a class="article-link" href="https://tinhte.vn/thread/markdown-va-html-ra-doi-tu-rat-lau-lai-tro-thanh-dinh-dang-noi-dung-ma-ai-agent-cuc-ki-ua-thich.4134303/" target="_blank" rel="noopener">Markdown và HTML ra đời từ rất lâu, lại trở thành định dạng nội dung mà AI Agent cực kì ưa thích</a>
+      </div>
+    </li></ul>
+  </div>
+
+  <!-- OTHER SECTIONS (GitHub, Reddit) -->
+  <div class="divider">&#128279; More Sources</div><div class="other-sections">
+  <details class="accordion" open id="github-trending-—-python">
+    <summary style="background:linear-gradient(135deg,#11998e,#38ef7d)">
+      <span class="sec-icon">🐙</span>
+      <span class="sec-title">GitHub Trending — python</span>
+      <span class="sec-count">5 stories</span>
+      <i class="acc-chevron">&#9660;</i>
+    </summary>
+    <div class="acc-body">
+      
+      <ul class="acc-list">
+      <li class="acc-item">
+        <div class="acc-index" style="background:#11998e">1</div>
+        <div><a class="acc-link" href="https://github.com/anthropics/financial-services" target="_blank" rel="noopener">anthropics / financial-services</a><div class="acc-meta"><span class="meta-badge">&#11088; 17,428</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#11998e">2</div>
+        <div><a class="acc-link" href="https://github.com/datawhalechina/hello-agents" target="_blank" rel="noopener">datawhalechina / hello-agents</a><div class="acc-meta"><span class="meta-badge">&#11088; 45,702</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#11998e">3</div>
+        <div><a class="acc-link" href="https://github.com/HKUDS/ViMax" target="_blank" rel="noopener">HKUDS / ViMax</a><div class="acc-meta"><span class="meta-badge">&#11088; 3,603</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#11998e">4</div>
+        <div><a class="acc-link" href="https://github.com/CloakHQ/CloakBrowser" target="_blank" rel="noopener">CloakHQ / CloakBrowser</a><div class="acc-meta"><span class="meta-badge">&#11088; 3,969</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#11998e">5</div>
+        <div><a class="acc-link" href="https://github.com/freemocap/freemocap" target="_blank" rel="noopener">freemocap / freemocap</a><div class="acc-meta"><span class="meta-badge">&#11088; 8,381</span></div></div>
+      </li>
+      </ul>
+    </div>
+  </details>
+  <details class="accordion" id="github-trending">
+    <summary style="background:linear-gradient(135deg,#11998e,#38ef7d)">
+      <span class="sec-icon">🐙</span>
+      <span class="sec-title">GitHub Trending</span>
+      <span class="sec-count">5 stories</span>
+      <i class="acc-chevron">&#9660;</i>
+    </summary>
+    <div class="acc-body">
+      
+      <ul class="acc-list">
+      <li class="acc-item">
+        <div class="acc-index" style="background:#11998e">1</div>
+        <div><a class="acc-link" href="https://github.com/anthropics/financial-services" target="_blank" rel="noopener">anthropics / financial-services</a><div class="acc-meta"><span class="meta-badge">&#11088; 17,428</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#11998e">2</div>
+        <div><a class="acc-link" href="https://github.com/bytedance/UI-TARS-desktop" target="_blank" rel="noopener">bytedance / UI-TARS-desktop</a><div class="acc-meta"><span class="meta-badge">&#11088; 31,415</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#11998e">3</div>
+        <div><a class="acc-link" href="https://github.com/rohitg00/agentmemory" target="_blank" rel="noopener">rohitg00 / agentmemory</a><div class="acc-meta"><span class="meta-badge">&#11088; 3,456</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#11998e">4</div>
+        <div><a class="acc-link" href="https://github.com/datawhalechina/hello-agents" target="_blank" rel="noopener">datawhalechina / hello-agents</a><div class="acc-meta"><span class="meta-badge">&#11088; 45,702</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#11998e">5</div>
+        <div><a class="acc-link" href="https://github.com/datawhalechina/easy-vibe" target="_blank" rel="noopener">datawhalechina / easy-vibe</a><div class="acc-meta"><span class="meta-badge">&#11088; 8,538</span></div></div>
+      </li>
+      </ul>
+    </div>
+  </details>
+  <details class="accordion" id="r-programming">
+    <summary style="background:linear-gradient(135deg,#f7971e,#ffd200)">
+      <span class="sec-icon">🤖</span>
+      <span class="sec-title">r/programming</span>
+      <span class="sec-count">5 stories</span>
+      <i class="acc-chevron">&#9660;</i>
+    </summary>
+    <div class="acc-body">
+      
+      <ul class="acc-list">
+      <li class="acc-item">
+        <div class="acc-index" style="background:#f7971e">1</div>
+        <div><a class="acc-link" href="https://codeutopia.net/blog/2026/05/09/you-should-read-programming-as-theory-building/" target="_blank" rel="noopener">You should read Programming as Theory Building</a><div class="acc-meta"><span class="meta-badge">&#8679; 227</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#f7971e">2</div>
+        <div><a class="acc-link" href="https://xcancel.com/jarredsumner/status/2053047748191232310" target="_blank" rel="noopener">Bun’s rewrite from Zig to Rust passes 99.8% of testsuite</a><div class="acc-meta"><span class="meta-badge">&#8679; 160</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#f7971e">3</div>
+        <div><a class="acc-link" href="https://bogomolov.work/blog/posts/wasm-vs-docker/" target="_blank" rel="noopener">Docker images are hundreds of MB; a full game engine compiles to 35MB WASM</a><div class="acc-meta"><span class="meta-badge">&#8679; 82</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#f7971e">4</div>
+        <div><a class="acc-link" href="https://blog.gaborkoos.com/posts/2026-05-09-Your-Recursion-Is-Lying-to-You/?utm_source=reddit&amp;amp;utm_medium=social&amp;amp;utm_campaign=your-recursion-is-lying-to-you&amp;amp;utm_content=r_programming" target="_blank" rel="noopener">JavaScript specified tail call optimization in ES2015. Most engines never implemented it, and your tail-recursive code can still blow the stack.</a><div class="acc-meta"><span class="meta-badge">&#8679; 59</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#f7971e">5</div>
+        <div><a class="acc-link" href="https://machineherald.io/article/2026-03/10-zig-016-nears-release-with-a-reinvented-async-io-that-sidesteps-function-coloring/" target="_blank" rel="noopener">Zig 0.16 Reinvented Async I/O That Sidesteps Function Coloring</a><div class="acc-meta"><span class="meta-badge">&#8679; 49</span></div></div>
+      </li>
+      </ul>
+    </div>
+  </details>
+  <details class="accordion" id="r-machinelearning">
+    <summary style="background:linear-gradient(135deg,#f7971e,#ffd200)">
+      <span class="sec-icon">🤖</span>
+      <span class="sec-title">r/MachineLearning</span>
+      <span class="sec-count">5 stories</span>
+      <i class="acc-chevron">&#9660;</i>
+    </summary>
+    <div class="acc-body">
+      
+      <ul class="acc-list">
+      <li class="acc-item">
+        <div class="acc-index" style="background:#f7971e">1</div>
+        <div><a class="acc-link" href="https://www.reddit.com/r/MachineLearning/comments/1t80awj/my_experience_interviewing_with_huawei_vancouver/" target="_blank" rel="noopener">My experience interviewing with Huawei Vancouver for an ML research role: strong mismatch between how it was pitched and how it was evaluated [D]</a><div class="acc-meta"><span class="meta-badge">&#8679; 87</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#f7971e">2</div>
+        <div><a class="acc-link" href="https://www.reddit.com/r/MachineLearning/comments/1t7yrvr/deepseek_v4_paper_full_version_is_out_fp4_qat/" target="_blank" rel="noopener">DeepSeek V4 paper full version is out, FP4 QAT details and stability tricks [D]</a><div class="acc-meta"><span class="meta-badge">&#8679; 51</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#f7971e">3</div>
+        <div><a class="acc-link" href="https://www.reddit.com/r/MachineLearning/comments/1t8bnmp/what_is_an_average_publication_outcome_for_an_ml/" target="_blank" rel="noopener">What is an average publication outcome for an ML PhD? [D]</a><div class="acc-meta"><span class="meta-badge">&#8679; 38</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#f7971e">4</div>
+        <div><a class="acc-link" href="https://www.reddit.com/r/MachineLearning/comments/1t7zwrx/neurips_pushing_anonymous_repo_after_rebuttal_d/" target="_blank" rel="noopener">Neurips : Pushing anonymous repo after rebuttal  [D]</a><div class="acc-meta"><span class="meta-badge">&#8679; 6</span></div></div>
+      </li>
+      <li class="acc-item">
+        <div class="acc-index" style="background:#f7971e">5</div>
+        <div><a class="acc-link" href="https://www.reddit.com/gallery/1t8ryy1" target="_blank" rel="noopener">Steam Simularity Reccomender Student Project [p]</a><div class="acc-meta"><span class="meta-badge">&#8679; 3</span></div></div>
+      </li>
+      </ul>
+    </div>
+  </details></div>
+
+  <div class="footer">
+    Generated by daily-info-digest &middot; Summarized with Claude AI
+  </div>
+</div>
+
+<script>
+(function () {
+  // Source filter tabs
+  var tabs = document.querySelectorAll('.source-tab');
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      var src = tab.dataset.source;
+      tabs.forEach(function (t) { t.classList.remove('active'); });
+      tab.classList.add('active');
+      document.querySelectorAll('.article-item').forEach(function (item) {
+        if (src === 'all' || item.dataset.source === src) {
+          item.classList.remove('hidden');
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -63,14 +63,14 @@ def main() -> None:
         # Pick top 5 highlights across all RSS items first
         rss_section = next((s for s in sections if s["type"] == "rss"), None)
         if rss_section:
-            print("Picking top 5 highlights …")
+            print("Picking top 5 highlights …", flush=True)
             try:
                 rss_section["highlights"] = get_top_highlights(rss_section["items"])
             except Exception as e:
                 print(f"[warn] highlights failed: {e}", file=sys.stderr)
 
         for section in sections:
-            print(f"Summarizing: {section['title']} …")
+            print(f"Summarizing: {section['title']} …", flush=True)
             try:
                 section["summary"] = summarize_section(section["title"], section["items"])
             except Exception as e:
