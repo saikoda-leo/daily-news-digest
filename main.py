@@ -28,6 +28,10 @@ def _scrape(label: str, fn, *args, **kwargs) -> "list[dict] | None":
 
 
 def main() -> None:
+    import os
+    if not os.environ.get("ANTHROPIC_API_KEY"):
+        print("error: ANTHROPIC_API_KEY is not set", file=sys.stderr)
+        sys.exit(1)
     config = load_config()
     sections = []
 
@@ -97,7 +101,11 @@ def main() -> None:
     render_html_digest(sections, html_path, today)
     print(f"Digest written → {html_path}")
 
-    subprocess.Popen(["open", "-a", "Google Chrome", str(html_path)])
+    if sys.platform == "darwin":
+        try:
+            subprocess.Popen(["open", "-a", "Google Chrome", str(html_path)])
+        except Exception as e:
+            print(f"[warn] could not open Chrome: {e}", file=sys.stderr)
 
 
 if __name__ == "__main__":
