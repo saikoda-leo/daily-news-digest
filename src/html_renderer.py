@@ -21,6 +21,10 @@ def _escape(t: str) -> str:
     return t.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
 
 
+def _safe_url(url: str) -> str:
+    return url if url.startswith(("http://", "https://")) else "#"
+
+
 def _slug(t: str) -> str:
     return t.lower().replace(" ", "-").replace("/", "-")
 
@@ -471,7 +475,7 @@ def _render_highlights(items: list, highlights: list, source_list: list) -> str:
         source = item.get("source", "")
         color = _source_color(source, source_list)
         title = _escape(item["title"])
-        url = item.get("url", "")
+        url = _safe_url(item.get("url", ""))
         card_class = f"hl-card hl-card-{rank - 1}"
 
         out += f"""
@@ -500,7 +504,7 @@ def _render_rss_items(items: list, highlight_indices: set, source_list: list) ->
         source = item.get("source", "")
         color = _source_color(source, source_list)
         title = _escape(item["title"])
-        url = _escape(item.get("url", ""))
+        url = _escape(_safe_url(item.get("url", "")))
         ai_summary = item.get("ai_summary", "")
         is_hl = i in highlight_indices
         hl_class = " highlighted" if is_hl else ""
@@ -552,7 +556,7 @@ def _render_accordion(section: dict, open_first: bool) -> str:
     items_html = ""
     for i, item in enumerate(section["items"], 1):
         title = _escape(item["title"])
-        url = _escape(item.get("url", ""))
+        url = _escape(_safe_url(item.get("url", "")))
         ai_summary = item.get("ai_summary", "")
         badges = []
         if "stars" in item:
