@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
+import os
 import subprocess
 import sys
+from concurrent.futures import ThreadPoolExecutor
 from datetime import date
 from pathlib import Path
 
@@ -15,8 +17,15 @@ from src.html_renderer import render_html_digest
 
 
 def load_config(path: str = "feeds.yaml") -> dict:
-    with open(path) as f:
-        return yaml.safe_load(f)
+    try:
+        with open(path) as f:
+            return yaml.safe_load(f)
+    except FileNotFoundError:
+        print(f"error: config file not found: {path}", file=sys.stderr)
+        sys.exit(1)
+    except yaml.YAMLError as e:
+        print(f"error: {path} contains invalid YAML: {e}", file=sys.stderr)
+        sys.exit(1)
 
 
 def _scrape(label: str, fn, *args, **kwargs) -> "list[dict] | None":
@@ -27,8 +36,29 @@ def _scrape(label: str, fn, *args, **kwargs) -> "list[dict] | None":
         return None
 
 
+def _keyword_match(item: dict, keywords: list) -> bool:
+    if not keywords:
+        return True
+    text = (item.get("title", "") + " " + item.get("summary", "")).lower()
+    return any(k.lower() in text for k in keywords)
+
+
+def _summarize_one(section: dict) -> None:
+    title = section["title"]
+    print(f"Summarizing: {title} …", flush=True)
+    try:
+        section["summary"] = summarize_section(title, section["items"])
+    except Exception as e:
+        print(f"[warn] summarization failed for {title}: {e}", file=sys.stderr)
+    try:
+        per_item = summarize_items(title, section["items"])
+        for item, ai_sum in zip(section["items"], per_item):
+            item["ai_summary"] = ai_sum
+    except Exception as e:
+        print(f"[warn] item summary failed for {title}: {e}", file=sys.stderr)
+
+
 def main() -> None:
-    import os
     if not os.environ.get("ANTHROPIC_API_KEY"):
         print("error: ANTHROPIC_API_KEY is not set", file=sys.stderr)
         sys.exit(1)
@@ -42,6 +72,22 @@ def main() -> None:
             for item in items:
                 item["source"] = feed["name"]
             all_rss_items.extend(items)
+
+    # Deduplicate by URL, preserving first-seen order
+    seen_urls: set = set()
+    deduped = []
+    for item in all_rss_items:
+        url = item.get("url", "")
+        if not url or url not in seen_urls:
+            if url:
+                seen_urls.add(url)
+            deduped.append(item)
+    all_rss_items = deduped
+
+    # Optional keyword filter (configure rss_filter.keywords in feeds.yaml)
+    keywords = config.get("rss_filter", {}).get("keywords", [])
+    all_rss_items = [item for item in all_rss_items if _keyword_match(item, keywords)]
+
     if all_rss_items:
         sections.append({"title": "Top Stories", "items": all_rss_items, "type": "rss"})
 
@@ -65,7 +111,7 @@ def main() -> None:
 
     summarize = config.get("summarization", {}).get("enabled", True)
     if summarize:
-        # Pick top 5 highlights across all RSS items first
+        # Highlights must run first; all per-section calls can run in parallel
         rss_section = next((s for s in sections if s["type"] == "rss"), None)
         if rss_section:
             print("Picking top 5 highlights …", flush=True)
@@ -74,20 +120,8 @@ def main() -> None:
             except Exception as e:
                 print(f"[warn] highlights failed: {e}", file=sys.stderr)
 
-        for section in sections:
-            print(f"Summarizing: {section['title']} …", flush=True)
-            try:
-                section["summary"] = summarize_section(section["title"], section["items"])
-            except Exception as e:
-                print(f"[warn] summarization failed for {section['title']}: {e}", file=sys.stderr)
-
-            print(f"Summarizing articles in: {section['title']} …", flush=True)
-            try:
-                per_item = summarize_items(section["title"], section["items"])
-                for item, ai_sum in zip(section["items"], per_item):
-                    item["ai_summary"] = ai_sum
-            except Exception as e:
-                print(f"[warn] item summary failed for {section['title']}: {e}", file=sys.stderr)
+        with ThreadPoolExecutor() as pool:
+            list(pool.map(_summarize_one, sections))
 
     output_dir = Path(config.get("output", {}).get("dir", "output"))
     output_dir.mkdir(exist_ok=True)

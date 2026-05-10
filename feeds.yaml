@@ -17,6 +17,24 @@ rss_feeds:
     url: https://tinhte.vn/rss
     max_items: 5
 
+# Optional keyword filter for RSS items.
+# Items where title+summary contain at least one keyword (case-insensitive) are kept.
+# Leave keywords empty (or omit this section) to include all articles.
+rss_filter:
+  keywords: []
+  # Example — uncomment to focus on AI/LLM topics:
+  # keywords:
+  #   - AI
+  #   - artificial intelligence
+  #   - LLM
+  #   - machine learning
+  #   - deep learning
+  #   - ChatGPT
+  #   - GPT
+  #   - Claude
+  #   - Gemini
+  #   - job
+
 github_trending:
   languages:
     - python

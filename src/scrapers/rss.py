@@ -3,6 +3,8 @@ import feedparser
 
 def fetch_rss(url: str, max_items: int = 5) -> list[dict]:
     feed = feedparser.parse(url)
+    if feed.bozo and not feed.entries:
+        raise RuntimeError(f"failed to fetch feed: {feed.bozo_exception}")
     items = []
     for entry in feed.entries[:max_items]:
         items.append({

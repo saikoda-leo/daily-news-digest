@@ -1,3 +1,4 @@
+import sys
 import requests
 from bs4 import BeautifulSoup
 
@@ -32,5 +33,12 @@ def fetch_github_trending(language: str = "", since: str = "daily", max_repos: i
             "summary": description,
             "stars": stars,
         })
+
+    if not repos and resp.status_code == 200:
+        print(
+            "[warn] github trending: page returned 200 but no repos parsed"
+            " — HTML structure may have changed",
+            file=sys.stderr,
+        )
 
     return repos
