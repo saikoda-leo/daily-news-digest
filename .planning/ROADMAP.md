@@ -23,7 +23,7 @@ Two phases deliver the full-text structured breakdown feature. Phase 1 wires in 
 **Plans**: 3 plans
   - [x] 01-01-PLAN.md — Article fetcher module + RSS HTML stripping (FETCH-01..05)
   - [x] 01-02-PLAN.md — Structured Claude summarizer (SUMM-01..03)
-  - [ ] 01-03-PLAN.md — Wire fetch + branched summarizer into main.py (SUMM-04, FETCH-05 orchestration)
+  - [x] 01-03-PLAN.md — Wire fetch + branched summarizer into main.py (SUMM-04, FETCH-05 orchestration)
 
 ### Phase 2: Frontend
 **Goal**: The HTML digest renders each RSS article's structured breakdown — core idea sentence and numbered key points — inside the existing article dropdown
