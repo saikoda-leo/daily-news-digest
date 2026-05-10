@@ -11,7 +11,8 @@ import yaml
 from src.scrapers.rss import fetch_rss
 from src.scrapers.github import fetch_github_trending
 from src.scrapers.reddit import fetch_reddit_posts
-from src.summarizer import summarize_section, get_top_highlights, summarize_items
+from src.scrapers.article import fetch_article_texts
+from src.summarizer import summarize_section, get_top_highlights, summarize_items, summarize_items_structured
 from src.renderer import render_digest
 from src.html_renderer import render_html_digest
 
@@ -51,9 +52,15 @@ def _summarize_one(section: dict) -> None:
     except Exception as e:
         print(f"[warn] summarization failed for {title}: {e}", file=sys.stderr)
     try:
-        per_item = summarize_items(title, section["items"])
-        for item, ai_sum in zip(section["items"], per_item):
-            item["ai_summary"] = ai_sum
+        if section.get("type") == "rss":
+            per_item = summarize_items_structured(title, section["items"])
+            for item, structured in zip(section["items"], per_item):
+                item["core_idea"] = structured["core_idea"]
+                item["key_points"] = structured["key_points"]
+        else:
+            per_item = summarize_items(title, section["items"])
+            for item, ai_sum in zip(section["items"], per_item):
+                item["ai_summary"] = ai_sum
     except Exception as e:
         print(f"[warn] item summary failed for {title}: {e}", file=sys.stderr)
 
@@ -87,6 +94,10 @@ def main() -> None:
     # Optional keyword filter (configure rss_filter.keywords in feeds.yaml)
     keywords = config.get("rss_filter", {}).get("keywords", [])
     all_rss_items = [item for item in all_rss_items if _keyword_match(item, keywords)]
+
+    if all_rss_items:
+        print(f"Fetching full text for {len(all_rss_items)} articles …", flush=True)
+        fetch_article_texts(all_rss_items)
 
     if all_rss_items:
         sections.append({"title": "Top Stories", "items": all_rss_items, "type": "rss"})
