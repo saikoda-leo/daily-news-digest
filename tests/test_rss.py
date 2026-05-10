@@ -48,3 +48,32 @@ def test_bozo_with_entries_does_not_raise():
     with patch("feedparser.parse", return_value=feed):
         items = fetch_rss("https://ex.com/rss")
     assert len(items) == 1
+
+
+def test_strip_html_removes_tags_and_decodes_entities():
+    entries = [_make_entry(summary="&lt;p&gt;Hello &amp;amp; &lt;b&gt;world&lt;/b&gt;&lt;/p&gt;")]
+    with patch("feedparser.parse", return_value=_make_feed(entries)):
+        items = fetch_rss("https://ex.com/rss")
+    assert items[0]["summary"] == "Hello & world"
+
+
+def test_strip_html_leaves_plain_text_unchanged():
+    entries = [_make_entry(summary="Plain text only")]
+    with patch("feedparser.parse", return_value=_make_feed(entries)):
+        items = fetch_rss("https://ex.com/rss")
+    assert items[0]["summary"] == "Plain text only"
+
+
+def test_strip_html_handles_empty_summary():
+    entries = [_make_entry(summary="")]
+    with patch("feedparser.parse", return_value=_make_feed(entries)):
+        items = fetch_rss("https://ex.com/rss")
+    assert items[0]["summary"] == ""
+
+
+def test_strip_html_falls_back_to_description():
+    e = MagicMock()
+    e.get = lambda k, default="": {"title": "T", "link": "https://ex.com", "summary": "", "description": "&lt;b&gt;desc&lt;/b&gt;"}.get(k, default)
+    with patch("feedparser.parse", return_value=_make_feed([e])):
+        items = fetch_rss("https://ex.com/rss")
+    assert items[0]["summary"] == "desc"
