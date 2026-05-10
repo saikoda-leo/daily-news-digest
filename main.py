@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import subprocess
 import sys
 from datetime import date
 from pathlib import Path
@@ -87,6 +88,8 @@ def main() -> None:
     html_path = output_dir / f"{today}.html"
     render_html_digest(sections, html_path, today)
     print(f"Digest written → {html_path}")
+
+    subprocess.Popen(["open", "-a", "Google Chrome", str(html_path)])
 
 
 if __name__ == "__main__":
