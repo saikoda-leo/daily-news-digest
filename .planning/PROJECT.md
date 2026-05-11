@@ -84,4 +84,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-10 after initialization*
+*Last updated: 2026-05-11 — Phase 01 (backend) complete: article fetcher, structured summarizer, pipeline wiring all shipped. RSS items now carry core_idea + key_points[5]; GitHub/Reddit keep ai_summary.*
