@@ -35,8 +35,8 @@ Two phases deliver the full-text structured breakdown feature. Phase 1 wires in 
   3. An RSS article with empty structured fields (fallback case) renders a plain link without broken layout or missing elements
   4. GitHub and Reddit accordion sections are visually unchanged — they do not show a "Core idea" or key points section
 **Plans**: 3 plans
-  - [ ] 02-01-PLAN.md — Add new CSS rules to style.css (.article-core-idea, .article-keypoints, .article-keypoint-chip, .hl-core-idea) [REND-01, REND-02, REND-04]
-  - [ ] 02-02-PLAN.md — Extend _render_rss_items() and _render_highlights() in html_renderer.py [REND-01..04]
+  - [x] 02-01-PLAN.md — Add new CSS rules to style.css (.article-core-idea, .article-keypoints, .article-keypoint-chip, .hl-core-idea) [REND-01, REND-02, REND-04]
+  - [x] 02-02-PLAN.md — Extend _render_rss_items() and _render_highlights() in html_renderer.py [REND-01..04]
   - [ ] 02-03-PLAN.md — End-to-end run + human-verify checkpoint on real digest [REND-01..04]
 **UI hint**: yes
 
