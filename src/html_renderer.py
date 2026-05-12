@@ -148,20 +148,46 @@ def _render_rss_items(items: list, highlight_indices: set, source_list: list) ->
         color = _source_color(source, source_list)
         title = _escape(item["title"])
         url = _safe_url(item.get("url", ""))
-        ai_summary = item.get("ai_summary", "")
+        ai_summary = item.get("ai_summary", "")  # legacy compat — no longer drives dropdown
+        core_idea = item.get("core_idea", "") or ""
+        key_points_raw = item.get("key_points", []) or []
+        non_empty_key_points = [kp for kp in key_points_raw if kp and kp.strip()]
+        has_dropdown = bool(non_empty_key_points)
+        has_core_idea = bool(core_idea and core_idea.strip())
         is_hl = i in highlight_indices
         hl_class = " highlighted" if is_hl else ""
         hl_tag = '<span class="highlight-tag">&#9733; Highlight</span>' if is_hl else ""
 
-        if ai_summary:
+        if has_core_idea or has_dropdown:
+            # Build the dropdown body: numbered key-points list (D-05, D-06, D-07) + read-more (D-08)
+            if has_dropdown:
+                kp_rows = ""
+                for n, kp in enumerate(non_empty_key_points, 1):
+                    kp_rows += (
+                        f'<li><span class="article-keypoint-chip" style="background:{color}">{n}</span>'
+                        f'<span>{_escape(kp)}</span></li>'
+                    )
+                key_points_html = f'<ul class="article-keypoints">{kp_rows}</ul>'
+            else:
+                key_points_html = ""
+
             read_more = (
                 f'<a class="article-read-more" href="{_escape(url)}" target="_blank" rel="noopener">Read full article &#8599;</a>'
                 if url != "#" else ""
             )
-            content = f"""<details class="article-details">
+
+            details_html = f"""<details class="article-details">
           <summary><span class="article-title-text">{title}</span><i class="article-toggle-icon">&#9660;</i></summary>
-          <div class="article-ai-summary" style="border-color:{color}">{_escape(ai_summary)}{read_more}</div>
+          <div class="article-ai-summary" style="border-color:{color}">{key_points_html}{read_more}</div>
         </details>"""
+
+            # D-02: core_idea sits below the title-row (the <summary>), as a sibling of <details>,
+            # so it is always visible without expanding (REND-01).
+            core_idea_html = (
+                f'<p class="article-core-idea" style="border-color:{color}">{_escape(core_idea)}</p>'
+                if has_core_idea else ""
+            )
+            content = details_html + core_idea_html
         elif url != "#":
             content = f'<a class="article-link" href="{_escape(url)}" target="_blank" rel="noopener">{title}</a>'
         else:
