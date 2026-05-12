@@ -115,6 +115,7 @@ def _render_highlights(items: list, highlights: list, source_list: list) -> str:
         if idx >= len(items):
             continue
         item = items[idx]
+        core_idea = item.get("core_idea", "") or ""
         source = item.get("source", "")
         color = _source_color(source, source_list)
         title = _escape(item["title"])
@@ -128,6 +129,7 @@ def _render_highlights(items: list, highlights: list, source_list: list) -> str:
     <div class="hl-body">
       <span class="hl-source-badge" style="background:{color}">{_escape(source)}</span>
       <a class="hl-title" href="{_escape(url)}" target="_blank" rel="noopener">{title}</a>
+      {"<p class='hl-core-idea'>" + _escape(core_idea) + "</p>" if core_idea and core_idea.strip() else ""}
       {"<p class='hl-reason' style='border-color:" + color + "'>" + _escape(reason) + "</p>" if reason else ""}
     </div>
   </div>"""
