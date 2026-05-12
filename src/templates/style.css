@@ -302,6 +302,45 @@ body { font-family: Georgia, "Times New Roman", serif; background: var(--bg); co
 }
 .article-read-more:hover { text-decoration: underline; }
 
+/* ── Per-article core idea + key points (D-01, D-05, D-06, D-10) ── */
+.article-core-idea {
+  font-size: .84rem; line-height: 1.6; color: var(--sub);
+  font-style: italic; background: #f7f9fc;
+  border-left: 3px solid;
+  border-radius: 0 8px 8px 0;
+  padding: 8px 12px;
+  margin: 8px 0 6px;
+}
+.article-keypoints {
+  list-style: none;
+  margin: 6px 0 4px;
+  padding: 0;
+}
+.article-keypoints > li {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: .84rem; line-height: 1.45;
+  font-family: Arial, sans-serif;
+  color: var(--sub);
+}
+.article-keypoints > li:last-child { border-bottom: none; }
+.article-keypoint-chip {
+  font-size: .68rem; font-weight: 700;
+  min-width: 20px; height: 20px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* highlight card: plain serif core idea (D-10 — differentiates from bordered .hl-reason) */
+.hl-core-idea {
+  font-size: .85rem; line-height: 1.55;
+  color: var(--sub);
+  /* no border, no italic — deliberately plain to contrast with .hl-reason below it */
+}
+
 /* acc-item dropdown */
 .acc-details { width: 100%; }
 .acc-details > summary {
