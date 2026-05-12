@@ -84,4 +84,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-11 — Phase 01 (backend) complete: article fetcher, structured summarizer, pipeline wiring all shipped. RSS items now carry core_idea + key_points[5]; GitHub/Reddit keep ai_summary.*
+*Last updated: 2026-05-12 — Phase 02 (frontend) complete: HTML renderer now emits core_idea quote box (always-visible) and key_points numbered list (expandable) for every RSS article. GitHub/Reddit accordions and fallback plain-link path unchanged. Milestone v1.0 delivered.*
