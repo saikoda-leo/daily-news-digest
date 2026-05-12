@@ -6,8 +6,8 @@ Two phases deliver the full-text structured breakdown feature. Phase 1 wires in 
 
 ## Phases
 
-- [ ] **Phase 1: Backend** - Fetch full article text and produce structured AI breakdown (core idea + 5 key points) per RSS article
-- [ ] **Phase 2: Frontend** - Update HTML renderer to show structured breakdown in article dropdowns
+- [x] **Phase 1: Backend** - Fetch full article text and produce structured AI breakdown (core idea + 5 key points) per RSS article
+- [x] **Phase 2: Frontend** - Update HTML renderer to show structured breakdown in article dropdowns
 
 ## Phase Details
 
@@ -37,14 +37,14 @@ Two phases deliver the full-text structured breakdown feature. Phase 1 wires in 
 **Plans**: 3 plans
   - [x] 02-01-PLAN.md — Add new CSS rules to style.css (.article-core-idea, .article-keypoints, .article-keypoint-chip, .hl-core-idea) [REND-01, REND-02, REND-04]
   - [x] 02-02-PLAN.md — Extend _render_rss_items() and _render_highlights() in html_renderer.py [REND-01..04]
-  - [ ] 02-03-PLAN.md — End-to-end run + human-verify checkpoint on real digest [REND-01..04]
+  - [x] 02-03-PLAN.md — End-to-end run + human-verify checkpoint on real digest [REND-01..04]
 **UI hint**: yes
 
 ## Progress
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Backend | 0/3 | Not started | - |
-| 2. Frontend | 0/3 | Not started | - |
+| 1. Backend | 3/3 | Complete | 2026-05-10 |
+| 2. Frontend | 3/3 | Complete | 2026-05-12 |
 </content>
 </invoke>
