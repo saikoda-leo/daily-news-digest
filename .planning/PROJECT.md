@@ -23,16 +23,17 @@ Each morning, every RSS article has a structured AI breakdown — core idea plus
 - ✓ GitHub Actions daily CI (00:00 UTC = 07:00 ICT), auto-commit output — existing
 - ✓ RSS keyword filtering, URL deduplication, XSS-safe URL handling — existing
 - ✓ Parallel section summarization via ThreadPoolExecutor — existing
+- ✓ Fetch full article text from each RSS article URL via trafilatura (parallel, 10s timeout) — v1.0
+- ✓ Fall back to RSS feed summary if fetch fails, returns empty, or content is too short — v1.0
+- ✓ Claude AI produces structured breakdown per article: core idea (1 sentence) + 5 key points — v1.0
+- ✓ Structured breakdown replaces `ai_summary` for RSS articles (`core_idea` + `key_points` fields) — v1.0
+- ✓ HTML always-visible core-idea quote box below title + expandable numbered key-points list — v1.0
+- ✓ Article fetching parallelized via ThreadPoolExecutor before summarization — v1.0
+- ✓ Feature applies to all RSS articles (not just highlights) — v1.0
 
 ### Active
 
-- [ ] Fetch full article text from each RSS article URL (requests + BeautifulSoup, extract `<p>` text)
-- [ ] Fall back to RSS feed summary if fetch fails, returns empty, or content is too short
-- [ ] Claude AI produces structured breakdown per article: core idea (1 sentence) + 5 key points
-- [ ] Structured breakdown replaces the current 1-2 sentence `ai_summary` for RSS articles
-- [ ] HTML dropdown renders "Core idea: [sentence]" followed by a numbered list of 5 points
-- [ ] Article fetching parallelized (all RSS articles fetched concurrently before summarization)
-- [ ] Feature applies to all RSS articles (not just highlights)
+(none — all v1.0 requirements shipped)
 
 ### Out of Scope
 
@@ -43,12 +44,17 @@ Each morning, every RSS article has a structured AI breakdown — core idea plus
 
 ## Context
 
-- The current `ai_summary` field on each item is a plain string (1-2 sentences). The new structured breakdown will replace this field's content or introduce new fields (`core_idea`, `key_points`) on RSS items.
-- `src/summarizer.py` contains `summarize_items()` — the function to extend or replace. It currently makes one Claude API call per section with all items batched.
-- `src/html_renderer.py` renders the dropdown in `_render_rss_items()` and `_render_accordion()`. The RSS section uses `_render_rss_items()`.
-- Full article fetching adds network latency. With 20-30 RSS articles, parallel fetching via `ThreadPoolExecutor` is essential.
-- Claude Haiku is used for all summarization. The structured breakdown prompt must request JSON output: `{"core_idea": "...", "key_points": ["...", "...", "...", "...", "..."]}`.
-- Articles may be behind paywalls, return bot-detection pages, or have very little extractable text. The fallback to RSS summary must be robust.
+**Shipped v1.0 on 2026-05-12.** ~1553 LOC Python, 64 tests, 22 files changed.
+
+Tech stack: Python 3.9, feedparser, trafilatura 2.0.0, requests, BeautifulSoup4, anthropic SDK, PyYAML.
+
+- RSS items now carry `core_idea` (str) + `key_points` (list[str, 5]) instead of `ai_summary`.
+- GitHub/Reddit items retain `ai_summary`; their accordions are unchanged.
+- `src/scrapers/article.py` fetches full article text concurrently (ThreadPoolExecutor, 10 workers, 10s timeout); skips PDFs, YouTube, GitHub URLs.
+- `summarize_items_structured()` in `src/summarizer.py` sends one batched Claude call per RSS section with assistant prefill `"["` to force JSON array output.
+- `_render_rss_items()` and `_render_highlights()` in `src/html_renderer.py` emit `.article-core-idea` quote box (always-visible) and `.article-keypoints` expandable list.
+- Fallback path (paywall/empty fetch) degrades to plain link with no broken layout.
+- 64 tests pass; no regressions in existing GitHub/Reddit rendering.
 
 ## Constraints
 
@@ -61,10 +67,11 @@ Each morning, every RSS article has a structured AI breakdown — core idea plus
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Replace `ai_summary` string with structured fields | Clean data model; no legacy format to carry | — Pending |
-| Parallel article fetching before summarization | Network I/O dominates; parallelism keeps latency low | — Pending |
-| Fall back to RSS text on any fetch failure | Robustness over completeness; a short summary is better than nothing | — Pending |
-| Structured prompt returns JSON per article (one call per section) | Keeps API calls batched; avoids N individual Claude calls | — Pending |
+| Replace `ai_summary` string with structured fields | Clean data model; no legacy format to carry | ✓ Good — clean split confirmed; RSS items never carry `ai_summary` |
+| Parallel article fetching before summarization | Network I/O dominates; parallelism keeps latency low | ✓ Good — ThreadPoolExecutor(10 workers) delivers all fetches before summarization |
+| Fall back to RSS text on any fetch failure | Robustness over completeness; a short summary is better than nothing | ✓ Good — fallback path tested; pipeline never crashes on bad URLs |
+| Structured prompt returns JSON per article (one call per section) | Keeps API calls batched; avoids N individual Claude calls | ✓ Good — assistant prefill `"["` eliminates markdown fences; malformed JSON handled |
+| Use trafilatura instead of BeautifulSoup for extraction | Higher extraction quality; handles edge cases (encoding, tables, comments) | ✓ Good — lxml_html_clean transitive dep required for v2.0.0 |
 
 ## Evolution
 
@@ -84,4 +91,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-12 — Phase 02 (frontend) complete: HTML renderer now emits core_idea quote box (always-visible) and key_points numbered list (expandable) for every RSS article. GitHub/Reddit accordions and fallback plain-link path unchanged. Milestone v1.0 delivered.*
+*Last updated: 2026-05-12 after v1.0 milestone — Full-Text Article Breakdown shipped. All 13 v1 requirements delivered and validated.*
